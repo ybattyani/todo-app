@@ -10,15 +10,6 @@ function App() {
   });
   const [input, setInput] = useState("");
 
-  // ✅ useEffect goes HERE (inside App, before return)
-
-  // useEffect(() => {
-  //   const savedTasks = JSON.parse(localStorage.getItem("tasks"));
-  //   if (savedTasks) {
-  //     setTasks(savedTasks);
-  //   }
-  // }, []);
-
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
