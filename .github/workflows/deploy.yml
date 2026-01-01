@@ -32,7 +32,7 @@ jobs:
           VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
       
       - name: Print Firebase Project (debug only)
-        run: echo $VITE_FIREBASE_PROJECT_ID
+        run: echo ${{ secrets.VITE_FIREBASE_APP_ID }}
 
       - uses: peaceiris/actions-gh-pages@v4
         with:
