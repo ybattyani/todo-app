@@ -1,29 +1,46 @@
 import { useState, useEffect } from "react";
+import { collection, addDoc, onSnapshot, deleteDoc, doc } from "firebase/firestore";
+import { db } from "./firebase";
+
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
- const [tasks, setTasks] = useState(() => {
-    const saved = localStorage.getItem("tasks");
-    return saved ? JSON.parse(saved) : [];
-  });
+  const [tasks, setTasks] = useState([]);
   const [input, setInput] = useState("");
 
   useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  }, [tasks]);
+    const unsubscribe = onSnapshot(collection(db, "tasks"), (snapshot) => {
+      const tasksData = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setTasks(tasksData);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
 
- function addTask() {
+
+  async function addTask(e) {
+    e.preventDefault();
     if (!input.trim()) return;
-    setTasks([...tasks, input]);
+
+    await addDoc(collection(db, "tasks"), {
+      text: input,
+      createdAt: new Date(),
+    });
+
     setInput("");
   }
 
-  function removeTask(index) {
-    setTasks(tasks.filter((_, i) => i !== index));
+
+  async function removeTask(id) {
+    await deleteDoc(doc(db, "tasks", id));
   }
+
 
   return (
     <div style={{ padding: 20 }}>
@@ -39,10 +56,10 @@ function App() {
       </form>
 
       <ul>
-        {tasks.map((task, i) => (
-          <li key={i}>
-            {task}
-            <button onClick={() => removeTask(i)}>❌</button>
+        {tasks.map((task) => (
+          <li key={task.id}>
+            {task.text}
+            <button onClick={() => removeTask(task.id)}>❌</button>
           </li>
         ))}
       </ul>
