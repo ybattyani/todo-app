@@ -40,3 +40,66 @@
 .read-the-docs {
   color: #888;
 }
+
+
+/* My CSS */
+.task-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee; /* optional separator between tasks */
+}
+
+.task-text {
+  flex: 1;
+  margin: 0 12px;
+  font-size: 18px;       /* change size here */
+  text-decoration: none; /* will be overridden dynamically if completed */
+  transition: opacity 0.2s;
+  text-align: left;
+}
+
+.task-text.completed {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+/* Form container */
+.task-form {
+  display: flex;
+  gap: 8px;          /* space between input and button */
+  margin-bottom: 12px;
+}
+
+/* Input box */
+.task-input {
+  flex: 1;            /* input takes available space */
+  font-size: 18px;    /* bigger text */
+  padding: 10px 12px; /* taller input */
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.task-input:focus {
+  border-color: #233f5d; /* optional focus highlight */
+}
+
+/* Optional: Add button */
+.task-add-btn {
+  padding: 10px 16px;
+  font-size: 16px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.task-add-btn:hover {
+  background-color: #0056b3;
+}
