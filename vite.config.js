@@ -10,9 +10,9 @@ export default defineConfig({
       manifest: {
         name: "To-Do App",
         short_name: "To-Do",
-        start_url: "/",
+        start_url: "/todo-app/",
         display: "standalone",
-        background_color: "#ffffff",
+        background_color: "#e90505ff",
         theme_color: "#000000",
         icons: [
           {
