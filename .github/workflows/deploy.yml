@@ -31,8 +31,12 @@ jobs:
           VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
           VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
       
-      - name: Print Firebase Project (debug only)
-        run: echo ${{ secrets.VITE_FIREBASE_APP_ID }}
+      - name: Debug Firebase Secrets
+        run: |
+          echo "Firebase Project ID: $VITE_FIREBASE_PROJECT_ID"
+        env:
+          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+
 
       - uses: peaceiris/actions-gh-pages@v4
         with:
