@@ -22,8 +22,6 @@ function App() {
     return () => unsubscribe();
   }, []);
 
-
-
   async function addTask(e) {
     e.preventDefault();
     if (!input.trim()) return;
@@ -35,7 +33,6 @@ function App() {
 
     setInput("");
   }
-
 
   async function removeTask(id) {
     await deleteDoc(doc(db, "tasks", id));
