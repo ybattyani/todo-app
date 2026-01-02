@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { collection, addDoc, onSnapshot, deleteDoc, doc ,updateDoc} from "firebase/firestore";
 import { db } from "./firebase";
-import TaskModal from "./TaskModal";
+import TaskCreationModal from "./TaskCreationModal";
+import { TASK_CATEGORIES,PRIORITY_LEVELS } from "./models/Task";
+
 
 import './App.css'
 
 function App() {
   const [tasks, setTasks] = useState([]);
-  // const [input, setInput] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -22,17 +23,18 @@ function App() {
     return () => unsubscribe();
   }, []);
 
-  async function addTask(taskText) {
-    const newTask = { id: Date.now(), text: taskText, completed: false };
-    setTasks([...tasks, newTask]);
-
+  async function addTask(newTask) {
+    setTasks((prev) => [...prev, newTask]);
+    console.log("Adding task to Firebase:", newTask);
     await addDoc(collection(db, "tasks"), {
-      text: newTask.text,
-      createdAt: newTask.id,
+      text: newTask.title,
+      createdAt: newTask.createdAt,
       completed: false,
+      deadline: newTask.createdAt + 86400000, // default deadline 24h later
+      category: newTask.category,
+      priority: newTask.priority,
+      parentId: newTask.parentId || null,
     });
-
-    // setInput("");
   }
   async function removeTask(id) {
     await deleteDoc(doc(db, "tasks", id));
@@ -55,21 +57,11 @@ function App() {
       <button onClick={() => setIsModalOpen(true)} className="task-add-btn">
         Add Task
       </button>
-      <TaskModal
+      <TaskCreationModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onAddTask={(taskText) => addTask(taskText)}
       />
-
-      {/* <form onSubmit={addTask} className="task-form">
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="New task"
-          className="task-input"
-        />
-        <button type="submit" className="task-add-btn">Add</button>
-      </form> */}
 
       <ul>
         {sortedTasks.map((task) => (
@@ -85,6 +77,16 @@ function App() {
             <span className={`task-text ${task.completed ? "completed" : ""}`}>
               {task.text}
             </span>
+            <span className={`task-text ${task.completed ? "completed" : ""}`}>
+              {task.deadline}
+            </span>
+            <span
+              className="task-category"
+              style={{ backgroundColor: TASK_CATEGORIES[task.category].color }}
+            >
+              {task.category}
+            </span>
+
             <button 
               onClick={() => removeTask(task.id)}
               type="submit"
