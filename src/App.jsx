@@ -26,7 +26,6 @@ function App() {
 
   async function addTask(newTask) {
     setTasks((prev) => [...prev, newTask]);
-    console.log("Adding task to Firebase:", newTask);
     await addDoc(collection(db, "tasks"), {
       text: newTask.title,
       createdAt: newTask.createdAt,
@@ -78,12 +77,7 @@ function App() {
             <div className={`task-content ${task.completed ? "completed" : ""}`}>
               <span className="task-title">{task.text}</span>
               <span className="task-date">{formatDayDate(task.createdAt)}</span>
-              {/* <span className="task-category">Work</span> */}
             </div>
-            {/* <div className="task-content">
-              <span className="task-title">{task.text}</span>
-              <span className="task-date">{formatDayDate(task.createdAt)}</span>
-            </div> */}
             <span
               className={`task-category ${task.completed ? "completed" : ""}`}
               style={{ backgroundColor: TASK_CATEGORIES[task.category].color }}

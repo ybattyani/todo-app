@@ -38,7 +38,6 @@ export const TASK_TEMPLATE = {
 };
 
 export const createTask = (input) => {
-  console.log("Creating task with input:", input);
   return {
     id: crypto.randomUUID(),
     title: input.title,
