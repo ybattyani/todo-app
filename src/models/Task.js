@@ -16,8 +16,8 @@ export const TASK_CATEGORIES = {
     label: "Training",
     color: "#28a745",
   },
-  HEALTH: {
-    label: "Health",
+  COACHING: {
+    label: "Coaching",
     color: "#dc3545",
   },
   OTHER: {
