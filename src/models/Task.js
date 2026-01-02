@@ -16,8 +16,8 @@ export const TASK_CATEGORIES = {
     label: "Training",
     color: "#28a745",
   },
-  HEALTH: {
-    label: "Health",
+  COACHING: {
+    label: "Coaching",
     color: "#dc3545",
   },
   OTHER: {
@@ -38,7 +38,6 @@ export const TASK_TEMPLATE = {
 };
 
 export const createTask = (input) => {
-  console.log("Creating task with input:", input);
   return {
     id: crypto.randomUUID(),
     title: input.title,

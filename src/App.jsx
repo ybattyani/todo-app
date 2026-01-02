@@ -3,6 +3,7 @@ import { collection, addDoc, onSnapshot, deleteDoc, doc ,updateDoc} from "fireba
 import { db } from "./firebase";
 import TaskCreationModal from "./TaskCreationModal";
 import { TASK_CATEGORIES,PRIORITY_LEVELS } from "./models/Task";
+import { formatDayDate } from "./utils/date";
 
 
 import './App.css'
@@ -25,7 +26,6 @@ function App() {
 
   async function addTask(newTask) {
     setTasks((prev) => [...prev, newTask]);
-    console.log("Adding task to Firebase:", newTask);
     await addDoc(collection(db, "tasks"), {
       text: newTask.title,
       createdAt: newTask.createdAt,
@@ -74,14 +74,12 @@ function App() {
               checked={task.completed}
               onChange={() => toggleCompleted(task.id)}
             />
-            <span className={`task-text ${task.completed ? "completed" : ""}`}>
-              {task.text}
-            </span>
-            <span className={`task-text ${task.completed ? "completed" : ""}`}>
-              {task.deadline}
-            </span>
+            <div className={`task-content ${task.completed ? "completed" : ""}`}>
+              <span className="task-title">{task.text}</span>
+              <span className="task-date">{formatDayDate(task.createdAt)}</span>
+            </div>
             <span
-              className="task-category"
+              className={`task-category ${task.completed ? "completed" : ""}`}
               style={{ backgroundColor: TASK_CATEGORIES[task.category].color }}
             >
               {task.category}
