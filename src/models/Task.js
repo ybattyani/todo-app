@@ -3,14 +3,6 @@ export const PRIORITY_LEVELS = {
   normal: "normal",
   high: "high",
 };
-// export const TASK_CATEGORIES = [
-//   "personal",
-//   "work",
-//   "chores",
-//   "coaching",
-//   "training",
-//   "others",
-// ];
 export const TASK_CATEGORIES = {
   PERSONAL: {
     label: "Personal",

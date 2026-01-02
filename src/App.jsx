@@ -9,8 +9,6 @@ import './App.css'
 
 function App() {
   const [tasks, setTasks] = useState([]);
-
-  // const [input, setInput] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -26,10 +24,7 @@ function App() {
   }, []);
 
   async function addTask(newTask) {
-    
     setTasks((prev) => [...prev, newTask]);
-    // const newTask = { id: Date.now(), text: taskText, completed: false, deadline: Date.now() };
-    // setTasks([...tasks, newTask]);
     console.log("Adding task to Firebase:", newTask);
     await addDoc(collection(db, "tasks"), {
       text: newTask.title,
