@@ -1,15 +1,17 @@
 import React, { useState } from "react";
-import './taskmodal.css';
+import { createTask,TASK_CATEGORIES,PRIORITY_LEVELS } from "./models/Task";
+import './TaskCreationModal.css';
 
 export default function TaskModal({ isOpen, onClose, onAddTask }) {
   const [text, setText] = useState("");
-
+  const [category, setCategory] = useState(TASK_CATEGORIES.PERSONAL.label);
+  const [priority, setPriority] = useState(PRIORITY_LEVELS.normal);
   if (!isOpen) return null; // don't render anything if modal is closed
 
   const handleAdd = () => {
     if (text.trim() === "") return;
-    console.log("Adding task:", text);
-    onAddTask(text);
+    const newTask = createTask({ title: text , category: category});
+    onAddTask(newTask);
     setText("");
     onClose();
   };
@@ -24,8 +26,17 @@ export default function TaskModal({ isOpen, onClose, onAddTask }) {
           onChange={(e) => setText(e.target.value)}
           placeholder="Enter task"
           className="modal-input"
-          onKeyDown={(e) => { if (e.key === "Enter") handleAdd(); }} // allow Enter to add task
         />
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+        >
+          {Object.entries(TASK_CATEGORIES).map(([key, value]) => (
+            <option key={key} value={key}>
+              {value.label}
+            </option>
+          ))}
+        </select>
         <div className="modal-buttons">
           <button onClick={handleAdd} className="task-add-btn">
             Add
