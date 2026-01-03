@@ -33,26 +33,28 @@ export default function TaskModal({ isOpen, onClose, onAddTask }) {
           placeholder="Enter task"
           className="modal-input"
         />
-        <select
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          {Object.entries(TASK_CATEGORIES).map(([key, value]) => (
-            <option key={key} value={key}>
-              {value.label}
-            </option>
-          ))}
-        </select>
-        <label className="form-label">
-          Due date
-          <input
-            type="date"
-            value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
-            className="task-date-input"
-          />
-        </label>
-
+        <div className="task-options">
+          Category:
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            {Object.entries(TASK_CATEGORIES).map(([key, value]) => (
+              <option key={key} value={key}>
+                {value.label}
+              </option>
+            ))}
+          </select>
+          Due date:
+          <label className="form-label">
+            <input
+              type="date"
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
+              className="task-date-input"
+            />
+          </label>
+        </div>
         <div className="modal-buttons">
           <button onClick={handleAdd} className="task-add-btn">
             Add
