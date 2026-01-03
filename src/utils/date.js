@@ -1,5 +1,12 @@
-export const formatDayDate = (timestamp) => {
-  const date = new Date(timestamp);
+export const getTomorrowDate = () => {
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  return tomorrow.toISOString().split("T")[0];
+};
+
+export const formatShortDate = (dateString) => {
+  const [year, month, day] = dateString.split("-");
+  const date = new Date(year, month - 1, day);
 
   return date.toLocaleDateString("en-US", {
     weekday: "short",

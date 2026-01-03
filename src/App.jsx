@@ -3,9 +3,6 @@ import { collection, addDoc, onSnapshot, deleteDoc, doc ,updateDoc} from "fireba
 import { db } from "./firebase";
 import TaskCreationModal from "./TaskCreationModal";
 import { TASK_CATEGORIES,PRIORITY_LEVELS } from "./models/Task";
-import { formatDayDate } from "./utils/date";
-
-
 import './App.css'
 
 function App() {
@@ -30,7 +27,7 @@ function App() {
       text: newTask.title,
       createdAt: newTask.createdAt,
       completed: false,
-      deadline: newTask.createdAt + 86400000, // default deadline 24h later
+      deadline: newTask.deadline,
       category: newTask.category,
       priority: newTask.priority,
       parentId: newTask.parentId || null,
@@ -62,7 +59,6 @@ function App() {
         onClose={() => setIsModalOpen(false)}
         onAddTask={(taskText) => addTask(taskText)}
       />
-
       <ul>
         {sortedTasks.map((task) => (
           <li 
@@ -76,7 +72,7 @@ function App() {
             />
             <div className={`task-content ${task.completed ? "completed" : ""}`}>
               <span className="task-title">{task.text}</span>
-              <span className="task-date">{formatDayDate(task.createdAt)}</span>
+              <span className="task-date">{task.deadline}</span>
             </div>
             <span
               className={`task-category ${task.completed ? "completed" : ""}`}

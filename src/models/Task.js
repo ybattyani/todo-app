@@ -38,13 +38,15 @@ export const TASK_TEMPLATE = {
 };
 
 export const createTask = (input) => {
+  console.log("Creating task with input:", input);
+  // validate input fields
   return {
     id: crypto.randomUUID(),
     title: input.title,
     completed: false,
     createdAt: Date.now(),
-    deadline: input.deadline || Date.now() + 86400000, // default deadline 24h later
-    category: input.category || TASK_CATEGORIES.personal,
+    deadline: input.deadline,
+    category: input.category,
     priority: input.priority || PRIORITY_LEVELS.normal,
     parentId: input.parentId || null,
   };
