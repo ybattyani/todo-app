@@ -1,18 +1,52 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { createTask,TASK_CATEGORIES,PRIORITY_LEVELS } from "./models/Task";
 import { formatShortDate,getTomorrowDate } from "./utils/date";
 import './TaskCreationModal.css';
 
-export default function TaskModal({ isOpen, onClose, onAddTask }) {
+export default function TaskModal({ task, isOpen, onClose, onSave }) {
   const [text, setText] = useState("");
   const [category, setCategory] = useState("PERSONAL");
   const [dueDate, setDueDate] = useState(getTomorrowDate());
   const [priority, setPriority] = useState(PRIORITY_LEVELS.normal);
+  const isEditMode = Boolean(task);
+
+  
+  useEffect(() => {
+    if (task) {
+      console.log("Editing task:", task);
+      setText(task.text);
+      setCategory(task.category);
+      setDueDate(task.dueDate);
+      setPriority(task.priority);
+    }
+  }, [task]);
   if (!isOpen) return null; // don't render anything if modal is closed
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!isEditMode) {
+      task = createTask({ text: text , category: category, dueDate:dueDate});
+      onSave(task);
+    }else{
+      const updatedTask = {
+        ...task,           // keeps id & completed state
+        text,
+        category,
+        dueDate,
+      };
+      console.log("Saving edited task:", updatedTask);
+      onSave(updatedTask);
+    }
+    setText("");
+    setDueDate(getTomorrowDate());
+    setCategory("PERSONAL");
+    setPriority(PRIORITY_LEVELS.normal);
+    onClose();
+  };
 
   const handleAdd = () => {
     if (text.trim() === "") return;
-    const newTask = createTask({ title: text , category: category, deadline:formatShortDate(dueDate)});
+    const newTask = createTask({ title: text , category: category, dueDate:formatShortDate(dueDate)});
     onAddTask(newTask);
     //Reset fields
     setText("");
@@ -25,7 +59,7 @@ export default function TaskModal({ isOpen, onClose, onAddTask }) {
   return (
     <div className="modal-backdrop" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
-        <h2>New Task</h2>
+        <h2>{isEditMode ? "Edit Task" : "New Task"}</h2>
         <input
           type="text"
           value={text}
@@ -56,7 +90,7 @@ export default function TaskModal({ isOpen, onClose, onAddTask }) {
           </label>
         </div>
         <div className="modal-buttons">
-          <button onClick={handleAdd} className="task-add-btn">
+          <button onClick={handleSubmit} className="task-add-btn">
             Add
           </button>
           <button onClick={onClose} className="task-cancel-btn">

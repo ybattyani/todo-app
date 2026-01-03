@@ -1,3 +1,5 @@
+import { formatShortDate,getTomorrowDate } from "../utils/date";
+
 export const PRIORITY_LEVELS = {
   low: "low",
   normal: "normal",
@@ -28,10 +30,10 @@ export const TASK_CATEGORIES = {
 
 export const TASK_TEMPLATE = {
   id: "",
-  title: "",
+  text: "",
   completed: false,
   createdAt: 0,
-  deadline: 0,
+  dueDate: 0,
   category: TASK_CATEGORIES.PERSONAL.label,
   priority: PRIORITY_LEVELS.normal,
   parentId: null,
@@ -42,11 +44,11 @@ export const createTask = (input) => {
   // validate input fields
   return {
     id: crypto.randomUUID(),
-    title: input.title,
+    text: input.text || "New Task",
     completed: false,
     createdAt: Date.now(),
-    deadline: input.deadline,
-    category: input.category,
+    dueDate: input.dueDate || getTomorrowDate(),
+    category: input.category || "PERSONAL",
     priority: input.priority || PRIORITY_LEVELS.normal,
     parentId: input.parentId || null,
   };
