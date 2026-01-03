@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { collection, addDoc, onSnapshot, deleteDoc, doc ,updateDoc} from "firebase/firestore";
 import { db } from "./firebase";
-import TaskCreationModal from "./TaskCreationModal";
-import { createTask,TASK_CATEGORIES,PRIORITY_LEVELS } from "./models/Task";
+import TaskModal from "./TaskCreationModal";
+import { TASK_CATEGORIES,PRIORITY_LEVELS } from "./models/Task";
 import { formatShortDate } from "./utils/date";
 import './App.css'
 
@@ -24,39 +24,6 @@ function App() {
     return () => unsubscribe();
   }, []);
 
-  async function addTask(newTask) {
-    setTasks((prev) => [...prev, newTask]);
-    await addDoc(collection(db, "tasks"), {
-      text: newTask.text,
-      createdAt: newTask.createdAt,
-      completed: false,
-      dueDate: newTask.dueDate,
-      category: newTask.category,
-      priority: newTask.priority,
-      parentId: newTask.parentId || null,
-    });
-  }
-  async function removeTask(id) {
-    await deleteDoc(doc(db, "tasks", id));
-  }
-  const toggleCompleted = (id) => {
-    const updatedTasks = tasks.map((task) =>
-      task.id === id ? { ...task, completed: !task.completed } : task
-    );
-    setTasks(updatedTasks);
-
-    // Update Firebase
-    const taskRef = doc(db, "tasks", id.toString());
-    updateDoc(taskRef, { completed: !tasks.find(t => t.id === id).completed });
-  };
-  const openEditModal = (task) => {
-    setTaskToEdit(task);
-    setIsModalOpen(true);
-  };
-  const openCreateModal = () => {
-    setTaskToEdit(null);
-    setIsModalOpen(true);
-  };
   async function handleSaveTask(task) {
     if (taskToEdit) {
       // EDIT
@@ -80,7 +47,28 @@ function App() {
       });
     }
   };
+  async function removeTask(id) {
+    await deleteDoc(doc(db, "tasks", id));
+  }
+  const toggleCompleted = (id) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === id ? { ...task, completed: !task.completed } : task
+    );
+    setTasks(updatedTasks);
 
+    // Update Firebase
+    const taskRef = doc(db, "tasks", id.toString());
+    updateDoc(taskRef, { completed: !tasks.find(t => t.id === id).completed });
+  };
+  const openEditModal = (task) => {
+    setTaskToEdit(task);
+    setIsModalOpen(true);
+  };
+  const openCreateModal = () => {
+    setTaskToEdit(null);
+    setIsModalOpen(true);
+  };
+  
 
   const sortedTasks = [...tasks].sort((a, b) => a.completed - b.completed);
 
@@ -90,13 +78,11 @@ function App() {
       <button onClick={() => openCreateModal()} className="task-add-btn">
         Add Task
       </button>
-      <TaskCreationModal
+      {isModalOpen && <TaskModal
         task={taskToEdit}
-        isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSave={handleSaveTask}
-        // onAddTask={(taskText) => addTask(taskText)}
-      />
+      />}
       <ul>
         {sortedTasks.map((task) => (
           <li 

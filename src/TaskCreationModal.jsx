@@ -1,26 +1,31 @@
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect,useRef } from "react";
 import { createTask,TASK_CATEGORIES,PRIORITY_LEVELS } from "./models/Task";
-import { formatShortDate,getTomorrowDate } from "./utils/date";
+import { getTomorrowDate } from "./utils/date";
 import './TaskCreationModal.css';
 
-export default function TaskModal({ task, isOpen, onClose, onSave }) {
+export default function TaskModal({ task, onClose, onSave }) {
   const [text, setText] = useState("");
   const [category, setCategory] = useState("PERSONAL");
   const [dueDate, setDueDate] = useState(getTomorrowDate());
   const [priority, setPriority] = useState(PRIORITY_LEVELS.normal);
   const isEditMode = Boolean(task);
+  const inputRef = useRef(null);
 
   
   useEffect(() => {
     if (task) {
-      console.log("Editing task:", task);
       setText(task.text);
       setCategory(task.category);
       setDueDate(task.dueDate);
       setPriority(task.priority);
     }
   }, [task]);
-  if (!isOpen) return null; // don't render anything if modal is closed
+  useEffect(() => {
+    // focus input when modal opens
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []); // run once on mount
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,33 +39,23 @@ export default function TaskModal({ task, isOpen, onClose, onSave }) {
         category,
         dueDate,
       };
-      console.log("Saving edited task:", updatedTask);
       onSave(updatedTask);
     }
+    closeModal();
+  };
+  const closeModal = () => {
     setText("");
     setDueDate(getTomorrowDate());
     setCategory("PERSONAL");
     setPriority(PRIORITY_LEVELS.normal);
     onClose();
-  };
-
-  const handleAdd = () => {
-    if (text.trim() === "") return;
-    const newTask = createTask({ title: text , category: category, dueDate:formatShortDate(dueDate)});
-    onAddTask(newTask);
-    //Reset fields
-    setText("");
-    setDueDate(getTomorrowDate());
-    setCategory("PERSONAL");
-    setPriority(PRIORITY_LEVELS.normal);
-    onClose();
-  };
-
+  }
   return (
-    <div className="modal-backdrop" onClick={onClose}>
+    <div className="modal-backdrop" onClick={closeModal}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <h2>{isEditMode ? "Edit Task" : "New Task"}</h2>
         <input
+          ref={inputRef}
           type="text"
           value={text}
           onChange={(e) => setText(e.target.value)}
@@ -91,9 +86,9 @@ export default function TaskModal({ task, isOpen, onClose, onSave }) {
         </div>
         <div className="modal-buttons">
           <button onClick={handleSubmit} className="task-add-btn">
-            Add
+            {isEditMode ? "Save" : "Add"}
           </button>
-          <button onClick={onClose} className="task-cancel-btn">
+          <button onClick={closeModal} className="task-cancel-btn">
             Cancel
           </button>
         </div>
