@@ -3,16 +3,15 @@ import { collection, addDoc, onSnapshot, deleteDoc, doc ,updateDoc} from "fireba
 import { db } from "./firebase";
 import TaskModal from "./TaskCreationModal";
 import { TASK_CATEGORIES,PRIORITY_LEVELS } from "./models/Task";
-import { formatShortDate } from "./utils/date";
+import { formatShortDate,getDate } from "./utils/date";
 import './App.css'
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [taskToEdit, setTaskToEdit] = useState(null);
-  const [sortBy, setSortBy] = useState('dueDate'); // 'dueDate', 'category', etc.
+  const [sortBy, setSortBy] = useState('completed'); // 'dueDate', 'category', etc.
   const [sortOrder, setSortOrder] = useState("asc"); // 'asc' or 'desc'
-  // const sortedTasks = [...tasks].sort((a, b) => a.completed - b.completed);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "tasks"), (snapshot) => {
@@ -70,7 +69,6 @@ function App() {
     setTaskToEdit(null);
     setIsModalOpen(true);
   };
-  
   const sortedTasks = () => {
     let sorted = [...tasks];
     if (sortBy) {
@@ -84,7 +82,10 @@ function App() {
     }
     return sorted;
   };
- 
+  const isTaskOverdue = (task) => {
+    const today = getDate()
+    return !task.completed && task.dueDate < today;
+  }
 
   return (
     <div style={{ padding: 20 }}>
@@ -129,7 +130,7 @@ function App() {
             />
             <div className={`task-content ${task.completed ? "completed" : ""}`}>
               <span className="task-title">{task.text}</span>
-              <span className="task-date">{formatShortDate(task.dueDate)}</span>
+              <span className={`task-date ${isTaskOverdue(task) ? "overdue" : ""}`}>{formatShortDate(task.dueDate)}</span>
             </div>
             <span
               className={`task-category ${task.completed ? "completed" : ""}`}
