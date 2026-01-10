@@ -1,4 +1,4 @@
-import { getTomorrowDate } from "../utils/date";
+import { getDate } from "../utils/date";
 
 export const PRIORITY_LEVELS = {
   low: "low",
@@ -47,7 +47,7 @@ export const createTask = (input) => {
     text: input.text || "New Task",
     completed: false,
     createdAt: Date.now(),
-    dueDate: input.dueDate || getTomorrowDate(),
+    dueDate: input.dueDate || getDate(),
     category: input.category || "PERSONAL",
     priority: input.priority || PRIORITY_LEVELS.normal,
     parentId: input.parentId || null,

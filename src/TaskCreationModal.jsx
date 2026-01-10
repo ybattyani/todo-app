@@ -1,12 +1,12 @@
 import React, { useState,useEffect,useRef } from "react";
 import { createTask,TASK_CATEGORIES,PRIORITY_LEVELS } from "./models/Task";
-import { getTomorrowDate } from "./utils/date";
+import { getDate } from "./utils/date";
 import './TaskCreationModal.css';
 
 export default function TaskModal({ task, onClose, onSave }) {
   const [text, setText] = useState("");
   const [category, setCategory] = useState("PERSONAL");
-  const [dueDate, setDueDate] = useState(getTomorrowDate());
+  const [dueDate, setDueDate] = useState(getDate());
   const [priority, setPriority] = useState(PRIORITY_LEVELS.normal);
   const isEditMode = Boolean(task);
   const inputRef = useRef(null);
@@ -45,7 +45,7 @@ export default function TaskModal({ task, onClose, onSave }) {
   };
   const closeModal = () => {
     setText("");
-    setDueDate(getTomorrowDate());
+    setDueDate(getDate());
     setCategory("PERSONAL");
     setPriority(PRIORITY_LEVELS.normal);
     onClose();
