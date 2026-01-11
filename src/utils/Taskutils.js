@@ -53,3 +53,24 @@ export const createTask = (input) => {
     parentId: input.parentId || null,
   };
 };
+
+export function buildTaskTree(tasks) {
+  const map = {};
+  const roots = [];
+
+   // Initialize map
+  tasks.forEach(task => {
+    map[task.id] = { ...task, children: [] };
+  });
+
+  // Build tree
+  tasks.forEach(task => {
+    if (task.parentId) {
+      map[task.parentId]?.children.push(map[task.id]);
+    } else {
+      roots.push(map[task.id]);
+    }
+  });
+
+  return roots;
+}
