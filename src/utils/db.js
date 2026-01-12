@@ -1,5 +1,6 @@
-import { collection, addDoc, onSnapshot, deleteDoc, doc ,updateDoc} from "firebase/firestore";
+import { collection, addDoc, onSnapshot, deleteDoc, doc ,updateDoc,writeBatch,query,getDocs,where} from "firebase/firestore";
 import { db } from "./firebase";
+// import { getAllChildren } from "../utils/Taskutils";
 
 export function subscribeToTasks(callback) {
   const q = collection(db, "tasks");
@@ -31,4 +32,43 @@ export async function addTaskToDB(task) {
         priority: task.priority,
         parentId: task.parentId || null,
       });
+}
+export async function toggleCompleteTaskWithChildren(taskId,completed) {
+  const batch = writeBatch(db);
+
+  // 1️⃣ Update parent
+  const parentRef = doc(db, "tasks", taskId);
+  batch.update(parentRef, { completed: completed });
+
+  // 2️⃣ Fetch all descendants
+  const children = await getAllChildrenFromFirebase(db, taskId);
+
+  // 3️⃣ Update descendants
+  children.forEach(child => {
+    const childRef = doc(db, "tasks", child.id);
+    batch.update(childRef, { completed: completed });
+  });
+
+  await batch.commit();
+}
+async function getAllChildrenFromFirebase(db, parentId) {
+  const q = query(
+    collection(db, "tasks"),
+    where("parentId", "==", parentId)
+  );
+
+  const snapshot = await getDocs(q);
+
+  let children = snapshot.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
+  // Recursively fetch grandchildren
+  for (const child of children) {
+    const grandChildren = await getAllChildrenFromFirebase(db, child.id);
+    children = children.concat(grandChildren);
+  }
+
+  return children;
 }
