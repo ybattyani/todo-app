@@ -1,16 +1,18 @@
 import React, { useState,useEffect,useRef } from "react";
-import { createTask,TASK_CATEGORIES,PRIORITY_LEVELS } from "./models/Task";
-import { getDate } from "./utils/date";
+import { createTask,TASK_CATEGORIES,PRIORITY_LEVELS } from "../utils/Taskutils";
+import { subscribeToTasks } from "../utils/db";
+import { getDate } from "../utils/date";
 import './TaskCreationModal.css';
 
-export default function TaskModal({ task, onClose, onSave }) {
+export default function TaskCreateModal({ task, onClose, onSave }) {
+  const [tasks, setTasks] = useState([]);
   const [text, setText] = useState("");
   const [category, setCategory] = useState("PERSONAL");
   const [dueDate, setDueDate] = useState(getDate());
   const [priority, setPriority] = useState(PRIORITY_LEVELS.normal);
+  const [parentId, setParentId] = useState(null);
   const isEditMode = Boolean(task);
   const inputRef = useRef(null);
-
   
   useEffect(() => {
     if (task) {
@@ -18,6 +20,7 @@ export default function TaskModal({ task, onClose, onSave }) {
       setCategory(task.category);
       setDueDate(task.dueDate);
       setPriority(task.priority);
+      setParentId(task.parentId);
     }
   }, [task]);
   useEffect(() => {
@@ -25,12 +28,15 @@ export default function TaskModal({ task, onClose, onSave }) {
     if (inputRef.current) {
       inputRef.current.focus();
     }
+    //
+    const unsubscribe = subscribeToTasks(setTasks);
+    return () => unsubscribe();
   }, []); // run once on mount
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!isEditMode) {
-      task = createTask({ text: text , category: category, dueDate:dueDate});
+      task = createTask({ text: text , category: category, dueDate:dueDate, parentId: parentId });
       onSave(task);
     }else{
       const updatedTask = {
@@ -38,6 +44,7 @@ export default function TaskModal({ task, onClose, onSave }) {
         text,
         category,
         dueDate,
+        parentId,
       };
       onSave(updatedTask);
     }
@@ -48,6 +55,7 @@ export default function TaskModal({ task, onClose, onSave }) {
     setDueDate(getDate());
     setCategory("PERSONAL");
     setPriority(PRIORITY_LEVELS.normal);
+    setParentId(null);
     onClose();
   }
   return (
@@ -83,6 +91,22 @@ export default function TaskModal({ task, onClose, onSave }) {
               className="task-date-input"
             />
           </label>
+        </div>
+        <div>Parent:
+          <select
+            value={parentId}
+            onChange={(e) => setParentId(e.target.value || null)}
+            >
+            <option value="">No parent</option>
+            {tasks
+              .filter(t => !t.parentId)
+              .filter(t => !t.completed) // only allow non-completed tasks as parents
+              .map(task => (
+                <option key={task.id} value={task.id}>
+                  {task.text}
+                </option>
+              ))}
+          </select>
         </div>
         <div className="modal-buttons">
           <button onClick={handleSubmit} className="task-add-btn">
