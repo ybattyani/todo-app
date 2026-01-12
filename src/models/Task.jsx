@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { TASK_CATEGORIES } from "../utils/Taskutils";
 import { formatShortDate,getDate } from "../utils/date";
-import { updateTaskInDB,removeTask } from "../utils/db";
+import { updateTaskInDB,removeTask,toggleCompleteTaskWithChildren } from "../utils/db";
 import TaskCreateModal from "./TaskCreationModal";
 import './task.css';
 
@@ -9,8 +9,6 @@ export default function TaskModal({ task, level = 0 }) {
   const [completed, setCompleted] = useState(task.completed);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
-  const hasChildren = task.children && task.children.length > 0;
-
   
   useEffect(() => {
     setCompleted(task.completed);
@@ -22,8 +20,7 @@ export default function TaskModal({ task, level = 0 }) {
   }
   const toggleCompleted = () => {
     setCompleted(!completed);
-    // Update Firebase
-    updateTaskInDB({ ...task, completed: !completed });
+    toggleCompleteTaskWithChildren(task.id, !completed);
   };
   const openEditModal = () => {
     setIsModalOpen(true);
