@@ -46,19 +46,22 @@ export default function TaskModal({ task, level = 0 }) {
           type="checkbox"
           checked={task.completed}
           onChange={() => toggleCompleted(task.id)}
+          className="task-checkbox"
           />
         <div className={`task-content ${task.completed ? "completed" : ""}`}>
           <span className="task-title">{task.text}</span>
           <span className={`task-date ${isTaskOverdue(task) ? "overdue" : ""}`}>{formatShortDate(task.dueDate)}</span>
+          <span
+            className={`task-category ${task.completed ? "completed" : ""}`}
+            style={{ color: TASK_CATEGORIES[task.category].color }}
+            >
+            {task.category}
+          </span>
         </div>
-        <span
-          className={`task-category ${task.completed ? "completed" : ""}`}
-          style={{ backgroundColor: TASK_CATEGORIES[task.category].color }}
-          >
-          {task.category}
-        </span>
-        <button onClick={() => openEditModal()}>Edit</button>
-        <button onClick={() => removeTask(task.id)} type="submit">x</button>
+        <div className="task-actions">
+          <button onClick={() => openEditModal()}>✎</button>
+          <button onClick={() => removeTask(task.id)} type="submit">x</button>
+        </div>
       </li>
       
         {task.children?.map(child => (

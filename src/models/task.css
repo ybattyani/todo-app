@@ -1,5 +1,72 @@
+.task-row {
+  display: flex;
+  align-items: flex-start;
+  /* justify-content: space-between; */
+  padding: 8px 0;
+  gap: 10px;
+  border-bottom: 1px solid #eee; /* optional separator between tasks */
+  width: 100%;
+}
+.task-checkbox {
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.task-content {
+  flex: 1;           /* takes all remaining space */
+  min-width: 0;      /* 🔥 REQUIRED for wrapping */
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: left;
+}
+.task-content.completed {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.task-title {
+  font-size: 16px;
+  /* margin-right: 24px; */
+  line-height: 1.4;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.task-date {
+  /* margin: 0 12px; */
+  text-align: left;
+  font-size: 0.8rem;
+  color: gray;
+}
+.task-date.overdue {
+  color: red;
+  opacity: 0.6;
+}
+
+.task-category {
+    /* border-radius: 12px; */
+    font-size: 0.6rem;
+    text-align: left;
+}
+
 .child-indicator {
   /* opacity: 0.5; */
   font-weight: bold;
   font-size: 18px;
+}
+.task-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;   /* prevents stealing space */
+  margin-left: auto; /* 🔥 pushes to far right */
+}
+.task-actions button {
+  padding: 4px 8px;       /* smaller click area */
+  font-size: 12px;        /* smaller text */
+  line-height: 1;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
 }
