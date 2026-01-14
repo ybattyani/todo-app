@@ -42,7 +42,10 @@ export const createTask = (input) => {
     parentId: input.parentId || null,
   };
 };
-
+export const isTaskOverdue = (task) => {
+    const today = getDate()
+    return !task.completed && task.dueDate < today;
+  }
 export function buildTaskTree(tasks) {
   const map = {};
   const roots = [];
