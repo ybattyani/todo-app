@@ -41,6 +41,11 @@
   color: #888;
 }
 
+/* My custom HTML element */
+ul {
+  padding: 0;         /* removes left indent */
+  margin: 0;          /* optional cleanup */
+}
 
 /* My CSS */
 .task-row {
@@ -140,4 +145,31 @@
 .task-date.overdue {
   color: red;
   opacity: 0.6;
+}
+
+.filter-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  margin-top: 16px;
+  width: 100%;
+}
+
+/* Style the selects */
+.filter-bar select {
+  flex: 1;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+}
+
+/* Focus state */
+.filter-bar select:focus {
+  outline: none;
+  border-color: #4f46e5; /* primary color */
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.15);
 }

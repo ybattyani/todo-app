@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { TASK_CATEGORIES } from "../utils/Taskutils";
-import { formatShortDate,getDate } from "../utils/date";
+import { TASK_CATEGORIES,isTaskOverdue } from "../utils/Taskutils";
+import { formatShortDate } from "../utils/date";
 import { updateTaskInDB,removeTask,toggleCompleteTaskWithChildren } from "../utils/db";
 import TaskCreateModal from "./TaskCreationModal";
 import './task.css';
@@ -13,11 +13,6 @@ export default function TaskModal({ task, level = 0 }) {
   useEffect(() => {
     setCompleted(task.completed);
   }, [task]);
-
-  const isTaskOverdue = (task) => {
-    const today = getDate()
-    return !completed && task.dueDate < today;
-  }
   const toggleCompleted = () => {
     setCompleted(!completed);
     toggleCompleteTaskWithChildren(task.id, !completed);
