@@ -46,6 +46,13 @@ ul {
   padding: 0;         /* removes left indent */
   margin: 0;          /* optional cleanup */
 }
+select {
+  width: 120px;            /* force same size */
+  height: 36px;
+  padding: 6px 12px;
+  font-size: 14px;
+  box-sizing: border-box;  /* VERY important */
+}
 
 /* My CSS */
 .task-row {

@@ -40,6 +40,7 @@ export const createTask = (input) => {
     category: input.category || "PERSONAL",
     priority: input.priority || PRIORITY_LEVELS.normal,
     parentId: input.parentId || null,
+    description: input.description || null,
   };
 };
 export const isTaskOverdue = (task) => {

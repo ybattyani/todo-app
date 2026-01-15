@@ -31,6 +31,7 @@ export async function addTaskToDB(task) {
         category: task.category,
         priority: task.priority,
         parentId: task.parentId || null,
+        description: task.description || null,
       });
 }
 export async function toggleCompleteTaskWithChildren(taskId,completed) {
