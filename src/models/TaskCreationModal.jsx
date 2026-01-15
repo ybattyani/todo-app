@@ -14,6 +14,7 @@ export default function TaskCreateModal({ task, onClose, onSave }) {
   const [priority, setPriority] = useState(PRIORITY_LEVELS.normal);
   const isEditMode = Boolean(task);
   const inputRef = useRef(null);
+  const descriptionRef = useRef(null);
   
   useEffect(() => {
     if (task) {
@@ -30,6 +31,12 @@ export default function TaskCreateModal({ task, onClose, onSave }) {
     if (inputRef.current) {
       inputRef.current.focus();
     }
+    // if (descriptionRef.current) {
+    //   console.log(descriptionRef.current.scrollHeight);
+
+    //   descriptionRef.current.style.height = "auto";
+    //   descriptionRef.current.style.height = descriptionRef.current.scrollHeight * 2 + "px";
+    // }
     //
     const unsubscribe = subscribeToTasks(setTasks);
     return () => unsubscribe();
@@ -133,13 +140,22 @@ export default function TaskCreateModal({ task, onClose, onSave }) {
         </div>
         <div>
           Description (Optional):
-          <input
+          {/* <input
           type="text"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Enter description"
           className="modal-input"
-        />
+        /> */}
+        <textarea
+            ref={descriptionRef}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Enter description"
+            // rows={1}
+            className="task-textarea"
+          />
+
         </div>
         <div className="modal-buttons">
           <button onClick={handleSubmit} className="task-add-btn">

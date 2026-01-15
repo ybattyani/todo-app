@@ -26,6 +26,8 @@
   margin-bottom: 16px;
   border: 1px solid #ccc;
   border-radius: 6px;
+  white-space: nowrap;
+  overflow-x: auto;
 }
 
 .modal-buttons {
@@ -73,4 +75,16 @@
   width: 100%;
   margin-bottom: 16px;
   /* margin-right: 4px; */
+}
+.task-textarea {
+  width: 100%;
+  resize: none;
+  overflow: hidden;
+  line-height: 1.4;
+  padding: 10px;
+  font-size: 14px;
+  box-sizing: border-box;
+  height: 120px;
+  overflow-y: auto;
+  /* transition: height 0.15s ease; */
 }
