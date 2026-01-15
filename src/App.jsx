@@ -46,7 +46,6 @@ function App() {
     }
   }
 
-
   return (
     <div style={{ padding: 20 }}>
       <h1>My To-Do List</h1>
