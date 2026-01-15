@@ -74,7 +74,6 @@
   gap: 10px;
   width: 100%;
   margin-bottom: 16px;
-  /* margin-right: 4px; */
 }
 .task-textarea {
   width: 100%;
@@ -86,5 +85,4 @@
   box-sizing: border-box;
   height: 120px;
   overflow-y: auto;
-  /* transition: height 0.15s ease; */
 }
