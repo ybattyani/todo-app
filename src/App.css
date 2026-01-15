@@ -3,6 +3,7 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .logo {
@@ -50,7 +51,7 @@ select {
   width: 120px;            /* force same size */
   height: 36px;
   padding: 6px 12px;
-  font-size: 14px;
+  font-size: 16px;
   box-sizing: border-box;  /* VERY important */
 }
 
@@ -137,7 +138,7 @@ select {
 .task-date {
   margin: 0 12px;
   text-align: left;
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: gray;
 }
 

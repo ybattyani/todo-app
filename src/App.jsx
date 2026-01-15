@@ -47,7 +47,7 @@ function App() {
   }
 
   return (
-    <div style={{ padding: 20 }}>
+    <div>
       <h1>My To-Do List</h1>
       <div> 
         <button onClick={() => openCreateModal()} className="task-add-btn">
