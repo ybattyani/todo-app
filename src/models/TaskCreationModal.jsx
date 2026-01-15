@@ -7,20 +7,22 @@ import './TaskCreationModal.css';
 export default function TaskCreateModal({ task, onClose, onSave }) {
   const [tasks, setTasks] = useState([]);
   const [text, setText] = useState("");
+  const [description, setDescription] = useState('');
   const [category, setCategory] = useState("PERSONAL");
   const [dueDate, setDueDate] = useState(getDate());
-  const [priority, setPriority] = useState(PRIORITY_LEVELS.normal);
   const [parentId, setParentId] = useState(null);
+  const [priority, setPriority] = useState(PRIORITY_LEVELS.normal);
   const isEditMode = Boolean(task);
   const inputRef = useRef(null);
   
   useEffect(() => {
     if (task) {
       setText(task.text);
+      setDescription(task.description);
       setCategory(task.category);
       setDueDate(task.dueDate);
-      setPriority(task.priority);
       setParentId(task.parentId);
+      setPriority(task.priority);
     }
   }, [task]);
   useEffect(() => {
@@ -36,15 +38,24 @@ export default function TaskCreateModal({ task, onClose, onSave }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!isEditMode) {
-      task = createTask({ text: text , category: category, dueDate:dueDate, parentId: parentId });
+      task = createTask({ 
+        text: text,
+        description: description,
+        category: category,
+        dueDate:dueDate,
+        parentId: parentId,
+        priority: priority 
+      });
       onSave(task);
     }else{
       const updatedTask = {
         ...task,           // keeps id & completed state
         text,
+        description,
         category,
         dueDate,
         parentId,
+        priority,
       };
       onSave(updatedTask);
     }
@@ -52,16 +63,18 @@ export default function TaskCreateModal({ task, onClose, onSave }) {
   };
   const closeModal = () => {
     setText("");
-    setDueDate(getDate());
+    setDescription('');
     setCategory("PERSONAL");
-    setPriority(PRIORITY_LEVELS.normal);
+    setDueDate(getDate());
     setParentId(null);
+    setPriority(PRIORITY_LEVELS.normal);
     onClose();
   }
   return (
     <div className="modal-backdrop" onClick={closeModal}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <h2>{isEditMode ? "Edit Task" : "New Task"}</h2>
+        Task Name:
         <input
           ref={inputRef}
           type="text"
@@ -91,8 +104,7 @@ export default function TaskCreateModal({ task, onClose, onSave }) {
               className="task-date-input"
             />
           </label>
-        </div>
-        <div>Parent:
+          Parent:
           <select
             value={parentId}
             onChange={(e) => setParentId(e.target.value || null)}
@@ -107,6 +119,27 @@ export default function TaskCreateModal({ task, onClose, onSave }) {
                 </option>
               ))}
           </select>
+          Priority:
+          <select
+            value={priority}
+            onChange={(e) => setPriority(e.target.value)}
+          >
+            {Object.entries(PRIORITY_LEVELS).map(([key, value]) => (
+              <option key={key} value={value}>
+                {key.charAt(0).toUpperCase() + key.slice(1)}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          Description (Optional):
+          <input
+          type="text"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Enter description"
+          className="modal-input"
+        />
         </div>
         <div className="modal-buttons">
           <button onClick={handleSubmit} className="task-add-btn">
