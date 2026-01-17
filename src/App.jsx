@@ -82,6 +82,7 @@ function App() {
 
       {isModalOpen && <TaskCreateModal
         task={null}
+        isEditMode={false}
         onClose={() => setIsModalOpen(false)}
         onSave={handleSaveTask}
       />}

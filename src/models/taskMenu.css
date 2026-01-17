@@ -1,0 +1,60 @@
+.task-menu {
+  position: relative;
+}
+
+.task-menu-dropdown {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: #2a2a2a;
+  border-radius: 8px;
+  min-width: 140px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  z-index: 100;
+  overflow: hidden;
+}
+
+.task-menu-dropdown button {
+  width: 100%;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  color: white;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  cursor: pointer;
+  text-align: left;
+}
+
+.task-menu-dropdown button:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.task-menu-dropdown .danger {
+  color: #ff6b6b;
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+}
+.icon-desktop {
+  display: inline;
+}
+
+.icon-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .icon-desktop {
+    display: none;
+  }
+
+  .icon-mobile {
+    display: inline;
+  }
+}

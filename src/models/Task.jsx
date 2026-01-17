@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 import { TASK_CATEGORIES,isTaskOverdue } from "../utils/Taskutils";
 import { formatShortDate } from "../utils/date";
-import { updateTaskInDB,removeTask,toggleCompleteTaskWithChildren } from "../utils/db";
+import { updateTaskInDB,removeTask,toggleCompleteTaskWithChildren,addTaskToDB } from "../utils/db";
 import TaskCreateModal from "./TaskCreationModal";
+import TaskMenu from "./taskMenu";
 import './task.css';
 
 export default function TaskModal({ task, level = 0 }) {
   const [completed, setCompleted] = useState(task.completed);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   
   useEffect(() => {
@@ -18,17 +20,30 @@ export default function TaskModal({ task, level = 0 }) {
     toggleCompleteTaskWithChildren(task.id, !completed);
   };
   const openEditModal = () => {
-    setIsModalOpen(true);
+    setIsEditModalOpen(true);
   };
-  async function handleSaveTask(updatedTask) {
+  const openCreateModal = () => {
+    setIsCreateModalOpen(true);
+  }
+  async function handleUpdateTask(updatedTask) {
     await updateTaskInDB(updatedTask);
+  }
+  async function handleSaveTask(newtask) {
+    await addTaskToDB(newtask);
   }
 
   return (
     <>
-      {isModalOpen && <TaskCreateModal
+      {isEditModalOpen && <TaskCreateModal
         task={task}
-        onClose={() => setIsModalOpen(false)}
+        isEditMode={true}
+        onClose={() => setIsEditModalOpen(false)}
+        onSave={handleUpdateTask}
+      />}
+      {isCreateModalOpen && <TaskCreateModal
+        task={task}
+        isEditMode={false}
+        onClose={() => setIsCreateModalOpen(false)}
         onSave={handleSaveTask}
       />}
       <li 
@@ -43,28 +58,33 @@ export default function TaskModal({ task, level = 0 }) {
           onChange={() => toggleCompleted(task.id)}
           />
         <div className={`task-content ${task.completed ? "completed" : ""}`}>
-          <span className="task-title">{task.text}</span>
-          <span className={`task-date ${isTaskOverdue(task) ? "overdue" : ""}`}>{formatShortDate(task.dueDate)}</span>
-        </div>
-        <span
-          className={`task-category ${task.completed ? "completed" : ""}`}
-          style={{ backgroundColor: TASK_CATEGORIES[task.category].color }}
+          <span className="task-title clickable" onClick={() => openEditModal(task)}>{task.text}</span>
+          
+          {/* <div className="task-meta"> */}
+            <span className="task-date">{formatShortDate(task.dueDate)}</span>
+            <span className="task-category" style={{ color: TASK_CATEGORIES[task.category].color }}>{task.category}</span>
+          {/* </div> */}
+          {/* <span
+            className={`task-category ${task.completed ? "completed" : ""}`}
+            style={{ backgroundColor: TASK_CATEGORIES[task.category].color }}
           >
-          {task.category}
-        </span>
-        <button onClick={() => openEditModal()}>Edit</button>
-        <button onClick={() => removeTask(task.id)} type="submit">x</button>
+            {task.category}
+          </span>
+          <span className={`task-date ${isTaskOverdue(task) ? "overdue" : ""}`}>{formatShortDate(task.dueDate)}</span> */}
+        </div>
+        <TaskMenu
+          onEdit={() => openEditModal(task)}
+          onCreate={() => openCreateModal(task)}
+          onDelete={() => removeTask(task.id)}
+        />
       </li>
-      
-        {task.children?.map(child => (
-            <TaskModal
-              key={child.id}
-              task={child}
-              level={level + 1}
-            />
-        ))}
-
-  
+      {task.children?.map(child => (
+          <TaskModal
+            key={child.id}
+            task={child}
+            level={level + 1}
+          />
+      ))}
     </>
 );
 }
