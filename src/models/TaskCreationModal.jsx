@@ -30,7 +30,6 @@ export default function TaskCreateModal({ task, onClose, onSave }) {
     if (inputRef.current) {
       inputRef.current.focus();
     }
-    //
     const unsubscribe = subscribeToTasks(setTasks);
     return () => unsubscribe();
   }, []); // run once on mount
@@ -133,13 +132,12 @@ export default function TaskCreateModal({ task, onClose, onSave }) {
         </div>
         <div>
           Description (Optional):
-          <input
-          type="text"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Enter description"
-          className="modal-input"
-        />
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Enter description"
+            className="task-textarea"
+          />
         </div>
         <div className="modal-buttons">
           <button onClick={handleSubmit} className="task-add-btn">
