@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { TASK_CATEGORIES,isTaskOverdue } from "../utils/Taskutils";
 import { formatShortDate } from "../utils/date";
-import { updateTaskInDB,removeTask,toggleCompleteTaskWithChildren } from "../utils/db";
+import { updateTaskInDB,removeTask,toggleCompleteTaskWithChildren,addTaskToDB } from "../utils/db";
 import TaskCreateModal from "./TaskCreationModal";
 import './task.css';
 
 export default function TaskModal({ task, level = 0 }) {
   const [completed, setCompleted] = useState(task.completed);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   
   useEffect(() => {
@@ -18,17 +19,30 @@ export default function TaskModal({ task, level = 0 }) {
     toggleCompleteTaskWithChildren(task.id, !completed);
   };
   const openEditModal = () => {
-    setIsModalOpen(true);
+    setIsEditModalOpen(true);
   };
-  async function handleSaveTask(updatedTask) {
+  const openCreateModal = () => {
+    setIsCreateModalOpen(true);
+  }
+  async function handleUpdateTask(updatedTask) {
     await updateTaskInDB(updatedTask);
+  }
+  async function handleSaveTask(newtask) {
+    await addTaskToDB(newtask);
   }
 
   return (
     <>
-      {isModalOpen && <TaskCreateModal
+      {isEditModalOpen && <TaskCreateModal
         task={task}
-        onClose={() => setIsModalOpen(false)}
+        isEditMode={true}
+        onClose={() => setIsEditModalOpen(false)}
+        onSave={handleUpdateTask}
+      />}
+      {isCreateModalOpen && <TaskCreateModal
+        task={task}
+        isEditMode={false}
+        onClose={() => setIsCreateModalOpen(false)}
         onSave={handleSaveTask}
       />}
       <li 
@@ -53,18 +67,16 @@ export default function TaskModal({ task, level = 0 }) {
           {task.category}
         </span>
         <button onClick={() => openEditModal()}>Edit</button>
+        <button onClick={() => openCreateModal()}>Add</button>
         <button onClick={() => removeTask(task.id)} type="submit">x</button>
       </li>
-      
-        {task.children?.map(child => (
-            <TaskModal
-              key={child.id}
-              task={child}
-              level={level + 1}
-            />
-        ))}
-
-  
+      {task.children?.map(child => (
+          <TaskModal
+            key={child.id}
+            task={child}
+            level={level + 1}
+          />
+      ))}
     </>
 );
 }

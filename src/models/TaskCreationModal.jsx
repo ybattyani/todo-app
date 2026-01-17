@@ -4,7 +4,7 @@ import { subscribeToTasks } from "../utils/db";
 import { getDate } from "../utils/date";
 import './TaskCreationModal.css';
 
-export default function TaskCreateModal({ task, onClose, onSave }) {
+export default function TaskCreateModal({ task, isEditMode, onClose, onSave }) {
   const [tasks, setTasks] = useState([]);
   const [text, setText] = useState("");
   const [description, setDescription] = useState('');
@@ -12,17 +12,21 @@ export default function TaskCreateModal({ task, onClose, onSave }) {
   const [dueDate, setDueDate] = useState(getDate());
   const [parentId, setParentId] = useState(null);
   const [priority, setPriority] = useState(PRIORITY_LEVELS.normal);
-  const isEditMode = Boolean(task);
   const inputRef = useRef(null);
   
   useEffect(() => {
-    if (task) {
+    if (task && isEditMode) {
       setText(task.text);
       setDescription(task.description);
       setCategory(task.category);
       setDueDate(task.dueDate);
       setParentId(task.parentId);
       setPriority(task.priority);
+    }
+    if (task && !isEditMode) {
+      setCategory(task.category);
+      setDueDate(task.dueDate);
+      setParentId(task.id);
     }
   }, [task]);
   useEffect(() => {
@@ -35,7 +39,6 @@ export default function TaskCreateModal({ task, onClose, onSave }) {
   }, []); // run once on mount
 
   const handleSubmit = (e) => {
-    e.preventDefault();
     if (!isEditMode) {
       task = createTask({ 
         text: text,
@@ -58,7 +61,6 @@ export default function TaskCreateModal({ task, onClose, onSave }) {
       };
       onSave(updatedTask);
     }
-    closeModal();
   };
   const closeModal = () => {
     setText("");
@@ -68,6 +70,24 @@ export default function TaskCreateModal({ task, onClose, onSave }) {
     setParentId(null);
     setPriority(PRIORITY_LEVELS.normal);
     onClose();
+  }
+  const handleSubmitAndClose = (e) => {
+    e.preventDefault();
+    handleSubmit(e);
+    closeModal();
+  }
+  const handleSubmitAndReOpen = (e) => {
+    e.preventDefault();
+    handleSubmit(e);
+    // Re-open modal for new task
+    if (!isEditMode) {
+      setText("");
+      setDescription('');
+      setCategory("PERSONAL");
+      setDueDate(getDate());
+      setParentId(null);
+      setPriority(PRIORITY_LEVELS.normal);
+    }
   }
   return (
     <div className="modal-backdrop" onClick={closeModal}>
@@ -140,9 +160,14 @@ export default function TaskCreateModal({ task, onClose, onSave }) {
           />
         </div>
         <div className="modal-buttons">
-          <button onClick={handleSubmit} className="task-add-btn">
+          <button onClick={handleSubmitAndClose} className="task-add-btn">
             {isEditMode ? "Save" : "Add"}
           </button>
+          {!isEditMode && (
+            <button onClick={handleSubmitAndReOpen} className="task-add-btn">
+              Add & New
+            </button>
+          )}
           <button onClick={closeModal} className="task-cancel-btn">
             Cancel
           </button>
