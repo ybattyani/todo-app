@@ -58,7 +58,7 @@ export default function TaskModal({ task, level = 0 }) {
           onChange={() => toggleCompleted(task.id)}
           />
         <div className={`task-content ${task.completed ? "completed" : ""}`}>
-          <span className="task-title">{task.text}</span>
+          <span className="task-title clickable" onClick={() => openEditModal(task)}>{task.text}</span>
           
           {/* <div className="task-meta"> */}
             <span className="task-date">{formatShortDate(task.dueDate)}</span>
