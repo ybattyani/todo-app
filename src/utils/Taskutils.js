@@ -8,11 +8,11 @@ export const PRIORITY_LEVELS = {
 export const TASK_CATEGORIES = {
   PERSONAL: {
     label: "Personal",
-    color: "#6c757d",
+    color: "#065a0a",
   },
   WORK: {
     label: "Work",
-    color: "#007bff",
+    color: "#9713b2",
   },
   TRAINING: {
     label: "Training",
@@ -20,11 +20,11 @@ export const TASK_CATEGORIES = {
   },
   COACHING: {
     label: "Coaching",
-    color: "#dc3545",
+    color: "#204D74",
   },
   OTHER: {
     label: "Other",
-    color: "#343a40",
+    color: "#ffffff",
   },
 };
 

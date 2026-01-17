@@ -89,6 +89,7 @@ export default function TaskCreateModal({ task, isEditMode, onClose, onSave }) {
       setPriority(PRIORITY_LEVELS.normal);
     }
   }
+  
   return (
     <div className="modal-backdrop" onClick={closeModal}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>

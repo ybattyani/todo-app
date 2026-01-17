@@ -3,6 +3,7 @@ import { TASK_CATEGORIES,isTaskOverdue } from "../utils/Taskutils";
 import { formatShortDate } from "../utils/date";
 import { updateTaskInDB,removeTask,toggleCompleteTaskWithChildren,addTaskToDB } from "../utils/db";
 import TaskCreateModal from "./TaskCreationModal";
+import TaskMenu from "./taskMenu";
 import './task.css';
 
 export default function TaskModal({ task, level = 0 }) {
@@ -58,17 +59,24 @@ export default function TaskModal({ task, level = 0 }) {
           />
         <div className={`task-content ${task.completed ? "completed" : ""}`}>
           <span className="task-title">{task.text}</span>
-          <span className={`task-date ${isTaskOverdue(task) ? "overdue" : ""}`}>{formatShortDate(task.dueDate)}</span>
-        </div>
-        <span
-          className={`task-category ${task.completed ? "completed" : ""}`}
-          style={{ backgroundColor: TASK_CATEGORIES[task.category].color }}
+          
+          {/* <div className="task-meta"> */}
+            <span className="task-date">{formatShortDate(task.dueDate)}</span>
+            <span className="task-category" style={{ color: TASK_CATEGORIES[task.category].color }}>{task.category}</span>
+          {/* </div> */}
+          {/* <span
+            className={`task-category ${task.completed ? "completed" : ""}`}
+            style={{ backgroundColor: TASK_CATEGORIES[task.category].color }}
           >
-          {task.category}
-        </span>
-        <button onClick={() => openEditModal()}>Edit</button>
-        <button onClick={() => openCreateModal()}>Add</button>
-        <button onClick={() => removeTask(task.id)} type="submit">x</button>
+            {task.category}
+          </span>
+          <span className={`task-date ${isTaskOverdue(task) ? "overdue" : ""}`}>{formatShortDate(task.dueDate)}</span> */}
+        </div>
+        <TaskMenu
+          onEdit={() => openEditModal(task)}
+          onCreate={() => openCreateModal(task)}
+          onDelete={() => removeTask(task.id)}
+        />
       </li>
       {task.children?.map(child => (
           <TaskModal
