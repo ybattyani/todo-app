@@ -1,11 +1,22 @@
-import { useState, useEffect } from "react";
-import SideBarMenu from "../models/SideBarMenu";
+import { NavLink } from "react-router-dom";
+import { ListTodo,Sun } from "lucide-react";
+import './mainPage.css';
 
 export default function MainPage() {
   return (
-    <div className="page morning-flow">
+    <div className="page">
       <h1>Main Page</h1>
-      <p>Welcome to the main page of your application.</p>
+      <p>Welcome!! <br/>In this app you will be able to manage your tasks and routines</p>
+      <div className="big-actions">
+        <NavLink to="/todo-app" className="action-tile">
+          <ListTodo size={40} />
+          <span>Tasks</span>
+        </NavLink>
+        <NavLink to="/morning-flow" className="action-tile">
+          <Sun size={40} />
+          <span>Morning Flow</span>
+        </NavLink>
+      </div>
     </div>
   );
 }

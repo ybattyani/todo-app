@@ -1,4 +1,3 @@
-import SideBarMenu from "../models/SideBarMenu";
 
 export default function MorningFlow() {
   return (
