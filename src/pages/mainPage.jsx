@@ -9,11 +9,11 @@ export default function MainPage() {
       <p>Welcome!! <br/>In this app you will be able to manage your tasks and routines</p>
       <div className="big-actions">
         <NavLink to="/todo-app" className="action-tile">
-          <ListTodo size={40} />
+          <ListTodo size={60} />
           <span>Tasks</span>
         </NavLink>
         <NavLink to="/morning-flow" className="action-tile">
-          <Sun size={40} />
+          <Sun size={60} />
           <span>Morning Flow</span>
         </NavLink>
       </div>
