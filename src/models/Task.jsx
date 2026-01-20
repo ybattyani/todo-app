@@ -10,7 +10,6 @@ export default function TaskModal({ task, level = 0 }) {
   const [completed, setCompleted] = useState(task.completed);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
   
   useEffect(() => {
     setCompleted(task.completed);
@@ -59,18 +58,8 @@ export default function TaskModal({ task, level = 0 }) {
           />
         <div className={`task-content ${task.completed ? "completed" : ""}`}>
           <span className="task-title clickable" onClick={() => openEditModal(task)}>{task.text}</span>
-          
-          {/* <div className="task-meta"> */}
-            <span className="task-date">{formatShortDate(task.dueDate)}</span>
-            <span className="task-category" style={{ color: TASK_CATEGORIES[task.category].color }}>{task.category}</span>
-          {/* </div> */}
-          {/* <span
-            className={`task-category ${task.completed ? "completed" : ""}`}
-            style={{ backgroundColor: TASK_CATEGORIES[task.category].color }}
-          >
-            {task.category}
-          </span>
-          <span className={`task-date ${isTaskOverdue(task) ? "overdue" : ""}`}>{formatShortDate(task.dueDate)}</span> */}
+          <span className={`task-date ${isTaskOverdue(task) ? "overdue" : ""}`}>{formatShortDate(task.dueDate)}</span>
+          <span className="task-category" style={{ color: TASK_CATEGORIES[task.category].color }}>{task.category}</span>
         </div>
         <TaskMenu
           onEdit={() => openEditModal(task)}
