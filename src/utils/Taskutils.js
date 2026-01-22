@@ -14,13 +14,21 @@ export const TASK_CATEGORIES = {
     label: "Work",
     color: "#9713b2",
   },
+  CHORES: {
+    label: "Chores",
+    color: "#ff8800",
+  },
+  MYAPP: {
+    label: "MyApp",
+    color: "#ff0000",
+  },
   TRAINING: {
     label: "Training",
     color: "#28a745",
   },
   COACHING: {
     label: "Coaching",
-    color: "#204D74",
+    color: "#0088ff",
   },
   OTHER: {
     label: "Other",
@@ -87,4 +95,23 @@ export function sortTasks(tasks) {
     // Earlier due date first (more urgent)
     return dateA - dateB;
   });
+}
+
+export function filterTasks(tasks, filter, categoryFilter="ALL") {
+  let filteredTasks = tasks;
+  if(categoryFilter !== "ALL") {
+    filteredTasks = tasks.filter(task => task.category === categoryFilter);
+  }
+  switch (filter) {
+    case "ALL":
+      return filteredTasks;
+    case "COMPLETED":
+      return filteredTasks.filter(task => task.completed);
+    case "ACTIVE":
+      return filteredTasks.filter(task => !task.completed);
+    case "OVERDUE":
+      return filteredTasks.filter(task => isTaskOverdue(task));
+    default:
+      return filteredTasks;
+  }
 }
