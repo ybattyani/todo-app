@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { ListTodo,MonitorCheck,Menu,Sun } from "lucide-react";
+import { ListTodo,MonitorCheck,Menu,Sun,NotepadText } from "lucide-react";
 import { useState, useRef } from "react";
 import './SideBarMenu.css';
 
@@ -33,6 +33,10 @@ return (
           <NavLink to="/morning-flow" className="sidebar-link" onClick={()=>setOpen(false)}>
             <Sun size={18} />
             Morning Flow
+          </NavLink>
+          <NavLink to="/backlog" className="sidebar-link" onClick={()=>setOpen(false)}>
+            <NotepadText size={18} />
+            Backlog
           </NavLink>
         </nav>
       </aside>

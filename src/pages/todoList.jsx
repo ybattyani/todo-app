@@ -3,7 +3,6 @@ import TaskCreateModal from "../models/TaskCreationModal";
 import TaskModal from "../models/Task";
 import { TASK_CATEGORIES,buildTaskTree,sortTasks,isTaskOverdue } from "../utils/Taskutils";
 import { subscribeToTasks,addTaskToDB } from "../utils/db";
-import SideBarMenu from "../models/SideBarMenu.jsx";
 import '../App.css'
 
 export default function ToDoList() {
