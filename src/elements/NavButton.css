@@ -1,0 +1,70 @@
+/* MAIN NAV BUTTONS */
+
+.big-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(140px, 1fr));
+  gap: 24px;
+  max-width: 500px;
+  margin: 2rem auto;
+}
+
+.action-tile {
+  aspect-ratio: 1 / 1;
+
+  display: flex;
+  flex-direction: column;   /* 👈 this is key */
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  text-decoration: none;
+  color: white;
+
+  font-weight: 600;
+  font-size: 16px;
+
+  border: 2px solid white;        /* 👈 visible border */
+  border-radius: 12px;
+
+  background: transparent;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+
+.action-tile:hover {
+  background: rgba(124, 131, 255, 0.1);
+  border: 2px solid #7c83ff;
+  transform: translateY(-2px);
+}
+
+.action-tile span {
+  font-size: 16px;
+}
+
+
+/* SIDEBAR NAV BUTTONS */
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sidebar-link {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 10px;
+  color: #ddd;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.sidebar-link:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.sidebar-link.active {
+  background: rgba(255,255,255,0.15);
+  font-weight: 600;
+}
