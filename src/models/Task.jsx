@@ -59,7 +59,7 @@ export default function TaskModal({ task, level = 0 }) {
         <div className={`task-content ${task.completed ? "completed" : ""}`}>
           <span className="task-title clickable" onClick={() => openEditModal(task)}>{task.text}</span>
           <span className={`task-date ${isTaskOverdue(task) ? "overdue" : ""}`}>{formatShortDate(task.dueDate)}</span>
-          <span className="task-category" style={{ color: TASK_CATEGORIES[task.category].color }}>{task.category}</span>
+          {task.category!=="MYAPP" && <span className="task-category" style={{ color: TASK_CATEGORIES[task.category].color }}>{task.category}</span>}
         </div>
         <TaskMenu
           onEdit={() => openEditModal(task)}
