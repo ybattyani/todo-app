@@ -101,6 +101,11 @@ export function filterTasks(tasks, filter, categoryFilter="ALL") {
   let filteredTasks = tasks;
   if(categoryFilter !== "ALL") {
     filteredTasks = tasks.filter(task => task.category === categoryFilter);
+  }else{
+    // Exclude MYAPP category when viewing ALL
+    // to prevent duplication with Backlog page
+    // Need to refactor later for scalability
+    filteredTasks = tasks.filter(task => task.category !== "MYAPP");
   }
   switch (filter) {
     case "ALL":
