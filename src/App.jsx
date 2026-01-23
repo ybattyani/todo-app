@@ -11,10 +11,10 @@ function App() {
     <BrowserRouter>
       <AppLayout>
         <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/todo-app/" element={<ToDoList />} />
-          <Route path="/morning-flow" element={<MorningFlow />} />
-          <Route path="/backlog" element={<Backlog />} />
+          <Route path="/todo-app/" element={<MainPage />} />
+          <Route path="/todo-app/todoList" element={<ToDoList />} />
+          <Route path="/todo-app/morning-flow" element={<MorningFlow />} />
+          <Route path="/todo-app/backlog" element={<Backlog />} />
         </Routes>
       </AppLayout>
     </BrowserRouter>
