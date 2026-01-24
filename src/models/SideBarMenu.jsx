@@ -1,11 +1,10 @@
-import { NavLink } from "react-router-dom";
-import { ListTodo,MonitorCheck,Menu,Sun,NotepadText } from "lucide-react";
+import { Menu } from "lucide-react";
 import { useState, useRef } from "react";
+import { SideBarButton } from "../elements/NavButton";
 import './SideBarMenu.css';
 
 export default function SideBarMenu({ onClose }) {
   const [open, setOpen] = useState(false);
-  const menuRef = useRef(null);
 
 return (
     <>
@@ -23,22 +22,7 @@ return (
       />
       <aside className={`sidebar ${open ? "open" : ""}`}>
         <h2 className="sidebar-title">My App</h2>
-        <nav className="sidebar-nav">
-          <NavLink to="/todo-app/" className="sidebar-link" onClick={()=>setOpen(false)}>
-            <MonitorCheck size={18} /> Main
-          </NavLink>
-          <NavLink to="/todo-app/todoList" className="sidebar-link" onClick={()=>setOpen(false)}>
-            <ListTodo size={18} />To Do List
-          </NavLink>
-          <NavLink to="/todo-app/morning-flow" className="sidebar-link" onClick={()=>setOpen(false)}>
-            <Sun size={18} />
-            Morning Flow
-          </NavLink>
-          <NavLink to="/todo-app/backlog" className="sidebar-link" onClick={()=>setOpen(false)}>
-            <NotepadText size={18} />
-            Backlog
-          </NavLink>
-        </nav>
+        <SideBarButton onClose={setOpen} />
       </aside>
     </>
   );

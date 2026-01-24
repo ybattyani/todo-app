@@ -26,31 +26,6 @@
   margin-bottom: 1rem;
 }
 
-.sidebar-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.sidebar-link {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  padding: 8px 10px;
-  color: #ddd;
-  border-radius: 6px;
-  text-decoration: none;
-}
-
-.sidebar-link:hover {
-  background: rgba(255,255,255,0.08);
-}
-
-.sidebar-link.active {
-  background: rgba(255,255,255,0.15);
-  font-weight: 600;
-}
-
 /* Main content */
 .main-content {
   flex: 1;
