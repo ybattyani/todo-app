@@ -34,16 +34,18 @@ export default function TaskList(category="ALL") {
         </button>
       </div>
       <div className="filter-bar">
-        Filters:
-        <select
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-          >
-          <option value="ALL">All Tasks</option>
-          <option value="ACTIVE">Active</option>
-          <option value="OVERDUE">Overdue</option>
-          <option value="COMPLETED">Completed</option>
-        </select>
+        <div>
+          Filters:
+          <select
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            >
+            <option value="ALL">All Tasks</option>
+            <option value="ACTIVE">Active</option>
+            <option value="OVERDUE">Overdue</option>
+            <option value="COMPLETED">Completed</option>
+          </select>
+        </div>
         {category === "ALL" && (
           <div>
             Categories:
@@ -51,19 +53,19 @@ export default function TaskList(category="ALL") {
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
             >
-            <option value="ALL">All</option>
-            {Object.entries(TASK_CATEGORIES).map(([key, value]) => (
+              <option value="ALL">All</option>
+              {Object.entries(TASK_CATEGORIES).map(([key, value]) => (
               <option key={key} value={key}>
                 {value.label}
               </option>
-            ))}
+              ))}
             </select>
           </div>
         )}
       </div>
 
       {isModalOpen && <TaskCreateModal
-        task={null}
+        task={category==="ALL" ? {} : {category:category}}
         isEditMode={false}
         onClose={() => setIsModalOpen(false)}
         onSave={handleSaveTask}
