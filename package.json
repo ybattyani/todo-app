@@ -10,6 +10,7 @@
     "deploy": "gh-pages -d dist",
     "lint": "eslint .",
     "preview": "vite preview",
+    "cy:run-github": "cypress run --config baseUrl=http://localhost:4173/",
     "cy:run": "cypress run"
   },
   "dependencies": {

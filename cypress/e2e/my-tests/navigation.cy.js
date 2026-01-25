@@ -1,11 +1,5 @@
 /// <reference types="cypress" />
-
-const routes = [
-  { selector: "nav-tasks", path: "/todo-app/todoList", title: "To Do List"},
-  { selector: "nav-morning", path: "/todo-app/morning-flow", title: "Morning Flow"},
-  { selector: "nav-backlog", path: "/todo-app/backlog", title: "Backlog"},
-  { selector: "nav-today", path: "/todo-app/today", title: "Today"},
-];
+import { navSelectors,routes } from '../../constants/selectors/navigation';
 
 describe("Main navigation tiles", () => {
   beforeEach(() => {
@@ -19,17 +13,18 @@ describe("Main navigation tiles", () => {
       cy.get("h1").should("contain", title);
     });
   });
+
   it('test Sidebar Menu', ()=>{
-    cy.get('.sidebar-toggle').click()
+    cy.get(navSelectors.sidebarToggle).click()
     cy.get('h2').should('contain','My App')
     //test Main button
-    cy.get('.sidebar-link').eq(0).click()
+    cy.get(navSelectors.sidebarButton).eq(0).click()
     cy.get("h1").should("contain", 'Main Page');
     routes.forEach((obj, index) => {
       //test SideBar buttons
-      cy.get('.sidebar-toggle').click()
+      cy.get(navSelectors.sidebarToggle).click()
       cy.get('h2').should('contain','My App')
-      cy.get('.sidebar-link').eq(index+1).click()
+      cy.get(navSelectors.sidebarButton).eq(index+1).click()
       cy.get("h1").should("contain", obj.title);
     });
   })
