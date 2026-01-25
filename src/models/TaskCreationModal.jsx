@@ -108,6 +108,7 @@ export default function TaskCreateModal({ task, isEditMode, onClose, onSave }) {
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
+            data-cy='category-select'
           >
             {Object.entries(TASK_CATEGORIES).map(([key, value]) => (
               <option key={key} value={key}>
@@ -161,7 +162,7 @@ export default function TaskCreateModal({ task, isEditMode, onClose, onSave }) {
           />
         </div>
         <div className="modal-buttons">
-          <button onClick={handleSubmitAndClose} className="task-add-btn">
+          <button onClick={handleSubmitAndClose} className="task-add-btn" data-cy="task-create-button">
             {isEditMode ? "Save" : "Add"}
           </button>
           {!isEditMode && (

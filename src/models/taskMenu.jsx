@@ -30,13 +30,13 @@ export default function TaskMenu({ onEdit, onCreate, onDelete }) {
 
       {open && (
         <div className="task-menu-dropdown">
-          <button onClick={onEdit}>
+          <button onClick={onEdit} data-cy="task-menu-edit">
             <Pencil size={14} /> Edit
           </button>
-          <button onClick={onCreate}>
+          <button onClick={onCreate} data-cy="task-menu-subtask">
             <LayersPlus size={14} />Subtask
           </button>
-          <button className="danger" onClick={onDelete}>
+          <button className="danger" onClick={onDelete} data-cy="task-menu-delete">
             <Trash2 size={14} /> Delete
           </button>
         </div>
