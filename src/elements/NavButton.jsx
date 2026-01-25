@@ -27,19 +27,19 @@ return (
 export function MainNavButton() {
   return (
       <div className="big-actions">
-        <NavLink to="/todo-app/todoList" className="action-tile">
+        <NavLink to="/todo-app/todoList" className="action-tile" data-cy="nav-tasks">
           <ListTodo size={60} />
           <span>Tasks</span>
         </NavLink>
-        <NavLink to="/todo-app/morning-flow" className="action-tile">
+        <NavLink to="/todo-app/morning-flow" className="action-tile" data-cy="nav-morning">
           <Sun size={60} />
           <span>Morning Flow</span>
         </NavLink>
-        <NavLink to="/todo-app/backlog" className="action-tile">
+        <NavLink to="/todo-app/backlog" className="action-tile" data-cy="nav-backlog">
           <NotepadText size={60} />
           <span>Backlog</span>
         </NavLink>
-        <NavLink to="/todo-app/today" className="action-tile">
+        <NavLink to="/todo-app/today" className="action-tile" data-cy="nav-today">
           <Calendar1 size={60} />
           <span>Today's Tasks</span>
         </NavLink>
