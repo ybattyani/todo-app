@@ -4,6 +4,7 @@ import { tasksSelectors, tasksCreationSelector } from "../../constants/selectors
 describe("Backlog Testing", () => {
   beforeEach(() => {
     cy.visit('todo-app/backlog')
+    cy.get(".task-row").should("have.length.greaterThan", 0);
   });
 
   it('Backlog create', ()=>{
