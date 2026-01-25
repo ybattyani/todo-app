@@ -1,1 +1,1 @@
-export const taskName = "CYPRESS - "
+export const taskName = "[CYPRESS] "

@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 import { tasksSelectors, tasksCreationSelector } from "../../constants/selectors/task";
-import { text } from "../../constants/variables/variable";
+
+const prefix = Cypress.env("testTaskPrefix");
 
 describe("Backlog Testing", () => {
   beforeEach(() => {
@@ -8,8 +9,12 @@ describe("Backlog Testing", () => {
     cy.get(tasksSelectors.row).should("have.length.greaterThan", 0);
   });
 
+  after(()=>{
+    cy.task("firebase:deleteTasksByTitleContains", prefix);
+  })
+
   it('Backlog create', ()=>{
-    const taskTitle = text+'Test Task Backlog'
+    const taskTitle = prefix+'Test Task Backlog'
 
     //create
     cy.get(tasksSelectors.add_task_button).click()
