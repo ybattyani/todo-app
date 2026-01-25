@@ -1,12 +1,12 @@
 import { Menu } from "lucide-react";
-import { useState, useRef } from "react";
-import { SideBarButton } from "../elements/NavButton";
+import { useState } from "react";
+import { SideBarButton } from "./NavButton";
 import './SideBarMenu.css';
 
-export default function SideBarMenu({ onClose }) {
+export default function SideBarMenu() {
   const [open, setOpen] = useState(false);
 
-return (
+  return (
     <>
     <button
         className="sidebar-toggle"

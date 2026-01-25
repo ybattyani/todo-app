@@ -5,7 +5,7 @@ import { TASK_CATEGORIES,buildTaskTree,sortTasks,filterTasks } from "../utils/Ta
 import { subscribeToTasks,addTaskToDB } from "../utils/db";
 import '../App.css'
 
-export default function TaskList(category="ALL") {
+export default function TaskList(category="ALL", displayType="FULL") {
   const [tasks, setTasks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filter, setFilter] = useState('ACTIVE');
@@ -22,47 +22,11 @@ export default function TaskList(category="ALL") {
     setTasks((prev) => [...prev, task]);
     await addTaskToDB(task);
   };
-  const openCreateModal = () => {
-    setIsModalOpen(true);
-  };
   
   return (
     <div>
-      <div> 
-        <button onClick={() => openCreateModal()} className="task-add-btn">
-          Add Task
-        </button>
-      </div>
-      <div className="filter-bar">
-        <div>
-          Filters:
-          <select
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-            >
-            <option value="ALL">All Tasks</option>
-            <option value="ACTIVE">Active</option>
-            <option value="OVERDUE">Overdue</option>
-            <option value="COMPLETED">Completed</option>
-          </select>
-        </div>
-        {category === "ALL" && (
-          <div>
-            Categories:
-            <select
-              value={categoryFilter}
-              onChange={(e) => setCategoryFilter(e.target.value)}
-            >
-              <option value="ALL">All</option>
-              {Object.entries(TASK_CATEGORIES).map(([key, value]) => (
-              <option key={key} value={key}>
-                {value.label}
-              </option>
-              ))}
-            </select>
-          </div>
-        )}
-      </div>
+      {AddTaskButton(()=>setIsModalOpen(true))}
+      {FiltersTaskDropDown(filter,setFilter,categoryFilter,setCategoryFilter,displayType)}
 
       {isModalOpen && <TaskCreateModal
         task={category==="ALL" ? {} : {category:category}}
@@ -72,9 +36,71 @@ export default function TaskList(category="ALL") {
       />}
       <ul>
         {visibleTasks.map(task => (
-          <TaskModal key={task.id} task={task} />
+          <TaskModal key={task.id} task={task} displayType={displayType} />
         ))}
       </ul>
     </div>
   );
+}
+
+export function AddTaskButton(onClick) {
+  return (      
+    <div> 
+      <button onClick={() => onClick()} className="task-add-btn">
+        Add Task
+      </button>
+    </div>
+  )
+}
+
+export function FiltersTaskDropDown(filter,setFilter,categoryFilter,setCategoryFilter,displayType){
+  if(displayType==="GROCERY"){
+    return
+  }
+  if(displayType==="SHORT"){
+    return (
+      <div className="filter-bar">
+        Filters:
+        <select
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          >
+          <option value="ALL">All Tasks</option>
+          <option value="ACTIVE">Active</option>
+          <option value="OVERDUE">Overdue</option>
+          <option value="COMPLETED">Completed</option>
+        </select>
+      </div>
+    )
+  }
+  return (
+    <div className="filter-bar">
+      <div>
+        Filters:
+        <select
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          >
+          <option value="ALL">All Tasks</option>
+          <option value="ACTIVE">Active</option>
+          <option value="OVERDUE">Overdue</option>
+          <option value="COMPLETED">Completed</option>
+        </select>
+      </div>
+      <div>
+        Categories:
+        <select
+          value={categoryFilter}
+          onChange={(e) => setCategoryFilter(e.target.value)}
+        >
+          <option value="ALL">All</option>
+          {Object.entries(TASK_CATEGORIES).map(([key, value]) => (
+          <option key={key} value={key}>
+            {value.label}
+          </option>
+          ))}
+        </select>
+      </div>
+    </div>
+  )
 }

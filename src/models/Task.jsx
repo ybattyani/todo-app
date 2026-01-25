@@ -6,7 +6,7 @@ import TaskCreateModal from "./TaskCreationModal";
 import TaskMenu from "./taskMenu";
 import './task.css';
 
-export default function TaskModal({ task, level = 0 }) {
+export default function TaskModal({ task, level = 0, displayType = "FULL" }) {
   const [completed, setCompleted] = useState(task.completed);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -18,32 +18,28 @@ export default function TaskModal({ task, level = 0 }) {
     setCompleted(!completed);
     toggleCompleteTaskWithChildren(task.id, !completed);
   };
-  const openEditModal = () => {
-    setIsEditModalOpen(true);
+  const taskContentDisplay = () => {
+    return (
+      <div className={`task-content ${task.completed ? "completed" : ""}`}>
+        <span className="task-title clickable" onClick={() => setIsEditModalOpen(true)}>{task.text}</span>
+        <span className={`task-date ${isTaskOverdue(task) ? "overdue" : ""}`}>{formatShortDate(task.dueDate)}</span>
+        {displayType === "FULL" && <span className="task-category" style={{ color: TASK_CATEGORIES[task.category].color }}>{task.category}</span>}
+      </div>
+    );
   };
-  const openCreateModal = () => {
-    setIsCreateModalOpen(true);
-  }
-  async function handleUpdateTask(updatedTask) {
-    await updateTaskInDB(updatedTask);
-  }
-  async function handleSaveTask(newtask) {
-    await addTaskToDB(newtask);
-  }
-
   return (
     <>
       {isEditModalOpen && <TaskCreateModal
         task={task}
         isEditMode={true}
         onClose={() => setIsEditModalOpen(false)}
-        onSave={handleUpdateTask}
+        onSave={updateTaskInDB}
       />}
       {isCreateModalOpen && <TaskCreateModal
         task={task}
         isEditMode={false}
         onClose={() => setIsCreateModalOpen(false)}
-        onSave={handleSaveTask}
+        onSave={addTaskToDB}
       />}
       <li 
         key={task.id}
@@ -56,14 +52,10 @@ export default function TaskModal({ task, level = 0 }) {
           checked={task.completed}
           onChange={() => toggleCompleted(task.id)}
           />
-        <div className={`task-content ${task.completed ? "completed" : ""}`}>
-          <span className="task-title clickable" onClick={() => openEditModal(task)}>{task.text}</span>
-          <span className={`task-date ${isTaskOverdue(task) ? "overdue" : ""}`}>{formatShortDate(task.dueDate)}</span>
-          {task.category!=="MYAPP" && <span className="task-category" style={{ color: TASK_CATEGORIES[task.category].color }}>{task.category}</span>}
-        </div>
+          {taskContentDisplay()}
         <TaskMenu
-          onEdit={() => openEditModal(task)}
-          onCreate={() => openCreateModal(task)}
+          onEdit={() => setIsEditModalOpen(true)}
+          onCreate={() => setIsCreateModalOpen(true)}
           onDelete={() => removeTask(task.id)}
         />
       </li>

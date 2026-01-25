@@ -1,10 +1,6 @@
-import { useState } from "react";
-import SideBarMenu from "../models/SideBarMenu.jsx";
-import { Menu } from "lucide-react";
+import SideBarMenu from "../elements/SideBarMenu.jsx";
 
 export default function AppLayout({ children }) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
   return (
     <div className="app-layout">
       <SideBarMenu/>
