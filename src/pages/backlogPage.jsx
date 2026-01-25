@@ -5,7 +5,7 @@ export default function Backlog() {
     <div className="page backlog">
       <h1>Backlog</h1>
       <p>Your MyApp task backlog items go here 📝</p>
-      {TaskList("MYAPP")}
+      {TaskList("MYAPP", "SHORT")}
     </div>
   );
 }

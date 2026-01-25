@@ -1,9 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import MainPage from "./pages/mainPage";
-import ToDoList from "./pages/todoList";
-import MorningFlow from "./pages/morningFlow";
-import Backlog from "./pages/backlog";
 import AppLayout from "./pages/appLayout";
+import MainPage from "./pages/mainPage";
+import ToDoList from "./pages/todoListPage";
+import MorningFlow from "./pages/morningFlowPage";
+import Backlog from "./pages/backlogPage";
+import Today from "./pages/todayPage";
 import './App.css'
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           <Route path="/todo-app/todoList" element={<ToDoList />} />
           <Route path="/todo-app/morning-flow" element={<MorningFlow />} />
           <Route path="/todo-app/backlog" element={<Backlog />} />
+          <Route path="/todo-app/today" element={<Today />} />
         </Routes>
       </AppLayout>
     </BrowserRouter>

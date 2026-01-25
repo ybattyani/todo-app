@@ -1,7 +1,9 @@
 export const getDate = () => {
-  const date = new Date();
-  return date.toISOString().split("T")[0];
-}
+  const now = new Date();
+  const offset = now.getTimezoneOffset() * 60000;
+  return new Date(now - offset).toISOString().split("T")[0];
+};
+
 
 export const formatShortDate = (dateString) => {
   const [year, month, day] = dateString.split("-");

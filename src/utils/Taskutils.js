@@ -120,3 +120,8 @@ export function filterTasks(tasks, filter, categoryFilter="ALL") {
       return filteredTasks;
   }
 }
+
+export function onlyTodaysTasks(tasks){
+  const today = getDate()
+  return tasks.filter(task => task.dueDate && task.dueDate <= today && !task.completed);
+}

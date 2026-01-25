@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { ListTodo,MonitorCheck,Sun,NotepadText } from "lucide-react";
+import { ListTodo,MonitorCheck,Sun,NotepadText,Calendar1 } from "lucide-react";
 import './NavButton.css';
 
 export function SideBarButton({ onClose }) {
@@ -16,6 +16,9 @@ return (
       </NavLink>
       <NavLink to="/todo-app/backlog" className="sidebar-link" onClick={()=>onClose(false)}>
         <NotepadText size={18} />Backlog
+      </NavLink>
+      <NavLink to="/todo-app/today" className="sidebar-link" onClick={()=>onClose(false)}>
+        <Calendar1 size={18} />Today's Tasks
       </NavLink>
     </nav>
   );
@@ -35,6 +38,10 @@ export function MainNavButton() {
         <NavLink to="/todo-app/backlog" className="action-tile">
           <NotepadText size={60} />
           <span>Backlog</span>
+        </NavLink>
+        <NavLink to="/todo-app/today" className="action-tile">
+          <Calendar1 size={60} />
+          <span>Today's Tasks</span>
         </NavLink>
       </div>
     );
