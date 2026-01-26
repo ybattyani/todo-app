@@ -46,7 +46,7 @@ export function MainNavButton() {
           <Calendar1 size={60} />
           <span>Today's Tasks</span>
         </NavLink>
-        <NavLink to="/todo-app/grocery" className="action-tile" data-cy="nav-today">
+        <NavLink to="/todo-app/grocery" className="action-tile" data-cy="nav-grocery">
           <Apple size={60} />
           <span>Grocery</span>
         </NavLink>
