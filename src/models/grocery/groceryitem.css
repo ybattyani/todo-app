@@ -1,0 +1,11 @@
+.item-row {
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  /* padding: 8px 0;  */
+  /* border-bottom: 1px solid #eee; optional separator between tasks */
+}
+.item-content.completed {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
