@@ -3,7 +3,7 @@ import { AddTaskButton } from "../models/TaskList";
 import TaskCreateModal from "../models/TaskCreationModal";
 import TaskModal from "../models/Task";
 import { onlyTodaysTasks,sortTasks } from "../utils/Taskutils";
-import { subscribeToTasks } from "../utils/db";
+import { subscribeToTasks,addTaskToDB } from "../utils/db";
 
 export default function todayPage() {
   const [tasks, setTasks] = useState([]);
