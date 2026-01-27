@@ -1,4 +1,4 @@
-import admin from "firebase-admin";
+// import admin from "firebase-admin";
 
 // /**
 //  * Initialize Firebase Admin ONLY once
@@ -10,22 +10,16 @@ import admin from "firebase-admin";
 //     throw new Error("❌ FIREBASE_PRIVATE_KEY is not defined");
 //   }
 
-//   admin.initializeApp({
-//     credential: admin.credential.cert({
-//       projectId: process.env.FIREBASE_PROJECT_ID,
-//       clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-//       privateKey: privateKey.replace(/\\n/g, "\n"),
-//     }),
-//   });
+
 // }
 
-const db = admin.firestore();
 
 /**
  * Delete ALL tasks whose title contains a given substring
  * @param {string} substring
- */
-export async function deleteTasksByTitleContains(substring) {
+*/
+export async function deleteTasksByTitleContains(admin,substring) {
+  const db = admin.firestore();
   if (!substring) {
     throw new Error("❌ substring is required");
   }
