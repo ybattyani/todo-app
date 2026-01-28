@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import { AddTaskButton } from "../models/TaskList";
 import TaskCreateModal from "../models/TaskCreationModal";
 import TaskModal from "../models/Task";
-import { onlyTodaysTasks,sortTasks } from "../utils/Taskutils";
+import { todayAndOverdueTasks,sortTasks } from "../utils/Taskutils";
 import { subscribeToTasks,addTaskToDB } from "../utils/db";
 
 export default function todayPage() {
   const [tasks, setTasks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const filteredTasks = (sortTasks(onlyTodaysTasks(tasks)));
+  const filteredTasks = (sortTasks(todayAndOverdueTasks(tasks)));
 
   useEffect(() => {
     const unsubscribe = subscribeToTasks(setTasks);
