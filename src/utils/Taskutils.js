@@ -121,7 +121,7 @@ export function filterTasks(tasks, filter, categoryFilter="ALL") {
   }
 }
 
-export function TodayAndOverdueTasks(tasks){
+export function todayAndOverdueTasks(tasks){
   const today = getDate()
   return tasks.filter(task => task.dueDate && task.dueDate <= today && !task.completed);
 }
