@@ -59,13 +59,14 @@ export default function GroceryPage(){
       {/* Inline add row */}
         <li className="simple-list-add">
           <input
+            data-cy="item_input"
             type="text"
             placeholder="Add item…"
             value={value}
             onChange={(e) => setValue(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleAdd()}
           />
-          <button onClick={handleAdd}>+</button>
+          <button onClick={handleAdd} className="add_item_button">+</button>
         </li>
       </ul>
     </div>
