@@ -1,4 +1,4 @@
-import { getDate } from "../utils/date";
+import { getDate, getTomorrowDate } from "../utils/date";
 
 export const PRIORITY_LEVELS = {
   low: "low",
@@ -121,7 +121,11 @@ export function filterTasks(tasks, filter, categoryFilter="ALL") {
   }
 }
 
-export function onlyTodaysTasks(tasks){
+export function todayAndOverdueTasks(tasks){
   const today = getDate()
   return tasks.filter(task => task.dueDate && task.dueDate <= today && !task.completed);
+}
+export function onlyTomorrowTasks(tasks){
+  const tomorrow = getTomorrowDate()
+  return tasks.filter(task => task.dueDate == tomorrow && !task.completed)
 }
