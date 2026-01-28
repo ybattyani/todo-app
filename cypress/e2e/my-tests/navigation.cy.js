@@ -17,6 +17,8 @@ describe("Main navigation tiles", () => {
   it('test Sidebar Menu', ()=>{
     cy.get(navSelectors.sidebarToggle).click()
     cy.get('h2').should('contain','My App')
+    //count sidebar button
+    cy.get(navSelectors.sidebarButton).should('have.length',6)
     //test Main button
     cy.get(navSelectors.sidebarButton).eq(0).click()
     cy.get("h1").should("contain", 'Main Page');

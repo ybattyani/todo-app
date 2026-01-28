@@ -73,3 +73,49 @@ async function getAllChildrenFromFirebase(db, parentId) {
 
   return children;
 }
+
+export function subscribeToItems(callback) {
+  const q = collection(db, "items");
+
+  const unsubscribe = onSnapshot(q, (snapshot) => {
+    const tasks = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    callback(tasks);
+  });
+
+  return unsubscribe;
+}
+export async function addItemToDB(item) {
+    await addDoc(collection(db, "items"), {
+        name: item.name,
+        completed: false,
+        category: item.category,
+        quantity: item.quantity,
+      });
+}
+export async function updateItemInDB(item) {
+    const itemRef = doc(db, "items", item.id);
+    await updateDoc(itemRef, item);
+}
+export async function resetAllItemsInDB() {
+  const snapshot = await getDocs(collection(db, "items"));
+  const batch = writeBatch(db);
+
+  snapshot.docs.forEach((doc) => {
+    batch.update(doc.ref, { completed: false });
+  });
+
+  await batch.commit();
+}
+export async function deleteAllItemsFromDB() {
+  const snapshot = await getDocs(collection(db, "items"));
+  const batch = writeBatch(db);
+
+  snapshot.docs.forEach((doc) => {
+    batch.delete(doc.ref);
+  });
+
+  await batch.commit();
+}

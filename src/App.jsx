@@ -5,6 +5,7 @@ import ToDoList from "./pages/todoListPage";
 import MorningFlow from "./pages/morningFlowPage";
 import Backlog from "./pages/backlogPage";
 import Today from "./pages/todayPage";
+import GroceryPage from "./pages/groceryPage";
 import './App.css'
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path="/todo-app/morning-flow" element={<MorningFlow />} />
           <Route path="/todo-app/backlog" element={<Backlog />} />
           <Route path="/todo-app/today" element={<Today />} />
+          <Route path="/todo-app/grocery" element={<GroceryPage />} />
         </Routes>
       </AppLayout>
     </BrowserRouter>
