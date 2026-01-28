@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { updateItemInDB } from "../../utils/db";
 import './groceryitem.css'
 
 export default function GroceryItem({item}) {
@@ -10,6 +11,7 @@ export default function GroceryItem({item}) {
   const toggleCompleted = () => {
     setCompleted(!completed);
     item.completed = !item.completed
+    updateItemInDB(item)
     console.log(item)
   };
   return (
