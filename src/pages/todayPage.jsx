@@ -34,7 +34,7 @@ export default function todayPage() {
     <div className="page morning-flow">
       <h1>Today</h1>
       <p>Here is today's list of task</p>
-      <button onClick{handleDayChange}>change day</button>
+      <button onClick={handleDayChange}>change day</button>
       {AddTaskButton(()=>setIsModalOpen(true))}
       {isModalOpen && <TaskCreateModal
         task={null}
