@@ -1,15 +1,18 @@
 /// <reference types="cypress" />
-import { tasksSelectors, tasksCreationSelector } from "../../constants/selectors/task";
+import { todaySelector } from "../../constants/selectors/todayPage";
 import { text } from "../../constants/variables/variable";
 
 describe("TodayPage Testing", () => {
   beforeEach(() => {
     cy.visit('todo-app/today')
-    // cy.get(tasksSelectors.row).should("have.length.greaterThan", 0);
   });
 
   it('Backlog create', ()=>{
-    const taskTitle = text+'Test Task Todays'
-    
+    // const taskTitle = text+'Test Task Today'
+    cy.get('h1').should('contain', 'Today')
+    cy.get(todaySelector.change_day).should('contain', 'Show Tomorrow').click()
+    cy.get('h1').should('contain', 'Tomorrow')
+    cy.get(todaySelector.change_day).should('contain', 'Show Today').click()
+    cy.get('h1').should('contain', 'Today')
   })
 });
