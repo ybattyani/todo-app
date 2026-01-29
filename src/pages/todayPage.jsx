@@ -9,42 +9,44 @@ export default function todayPage() {
   const [tasks, setTasks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isToday, setIsToday] = useState(true)
-  const filteredTasks = (sortTasks(todayAndOverdueTasks(tasks)));
+  const todayTasks = sortTasks(todayAndOverdueTasks(tasks))
+  const tomorrowTasks = sortTasks(onlyTomorrowTasks(tasks))
 
   useEffect(() => {
     const unsubscribe = subscribeToTasks(setTasks);
-    setTasks((sortTasks(todayAndOverdueTasks(tasks))))
     return () => unsubscribe();
   }, []);
+
   async function handleSaveTask(task) {
     // CREATE
     setTasks((prev) => [...prev, task]);
     await addTaskToDB(task);
   };
-  const handleDayChange = () => {
-    setIsToday(!isToday)
-    if(isToday){
-       setTasks((sortTasks(todayAndOverdueTasks(tasks))))
-}else{
-  setTasks((sortTasks(onlyTomorrowTasks(tasks))))
-}
-}
 
   return (
-    <div className="page morning-flow">
-      <h1>Today</h1>
+    <div className="page">
+      <h1>{isToday ? "Today": "Tomorrow"}</h1>
       <p>Here is today's list of task</p>
-      <button onClick={handleDayChange}>change day</button>
-      {AddTaskButton(()=>setIsModalOpen(true))}
+      <div className="modal-buttons">
+        <button
+          className="task-add-btn"
+          onClick={() => setIsToday((prev) => !prev)}
+          data-cy="change-day-button"
+        >
+          {isToday ? "Show Tomorrow" : "Show Today"}
+        </button>
+        {AddTaskButton(()=>setIsModalOpen(true))}
+
+      </div>
       {isModalOpen && <TaskCreateModal
         task={null}
         isEditMode={false}
         onClose={() => setIsModalOpen(false)}
         onSave={handleSaveTask}
       />}
-      {tasks.length === 0 && <div>Congrats nothing to do today</div>}
+        {(isToday ? todayTasks : tomorrowTasks).length === 0 && <div>Congrats nothing to do!</div>}
       <ul>
-        {tasks.map(task => (
+        {(isToday ? todayTasks : tomorrowTasks).map((task) => (
           <TaskModal key={task.id} task={task} />
         ))}
       </ul>

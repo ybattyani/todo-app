@@ -46,7 +46,7 @@ export default function TaskList(category="ALL", displayType="FULL") {
 export function AddTaskButton(onClick) {
   return (      
     <div> 
-      <button onClick={() => onClick()} className="task-add-btn">
+      <button onClick={() => onClick()} className="task-add-btn" data-cy="add-task-button">
         Add Task
       </button>
     </div>
