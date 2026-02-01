@@ -2,8 +2,8 @@
   display: flex;
   align-items: left;
   justify-content: left;
-  /* padding: 8px 0;  */
-  /* border-bottom: 1px solid #eee; optional separator between tasks */
+  padding: 2px 0; 
+  font-size: 18px;
 }
 .item-content.completed {
   text-decoration: line-through;
