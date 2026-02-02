@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { updateItemInDB } from "../../utils/db";
+import {createTask} from "../../utils/Taskutils";
+import TaskModal from "../Task";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import './groceryitem.css'
@@ -52,3 +54,12 @@ export default function GroceryItem({item,onToggleCompleted}) {
     </li>
 );
 }
+
+export function showGrocery(items,displayType='FULL') {
+    if(items.length===0){
+      return false
+    }
+    return (
+      <TaskModal key={items[0].id} task={createTask({text:"Grocery List"})} displayType={displayType} />
+    )
+  }

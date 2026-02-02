@@ -3,10 +3,12 @@ import { AddTaskButton } from "../models/TaskList";
 import TaskCreateModal from "../models/TaskCreationModal";
 import TaskModal from "../models/Task";
 import { todayAndOverdueTasks,sortTasks, onlyTomorrowTasks } from "../utils/Taskutils";
-import { subscribeToTasks,addTaskToDB } from "../utils/db";
+import {showGrocery} from "../models/grocery/groceryItem"
+import { subscribeToTasks,addTaskToDB,subscribeToItems } from "../utils/db";
 
 export default function todayPage() {
   const [tasks, setTasks] = useState([]);
+  const [items, setItems] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isToday, setIsToday] = useState(true)
   const todayTasks = sortTasks(todayAndOverdueTasks(tasks))
@@ -14,6 +16,7 @@ export default function todayPage() {
 
   useEffect(() => {
     const unsubscribe = subscribeToTasks(setTasks);
+    const unsubscribeitems = subscribeToItems(setItems);  
     return () => unsubscribe();
   }, []);
 
@@ -46,6 +49,7 @@ export default function todayPage() {
       />}
         {(isToday ? todayTasks : tomorrowTasks).length === 0 && <div>Congrats nothing to do!</div>}
       <ul>
+        {showGrocery(items,"FULL")}
         {(isToday ? todayTasks : tomorrowTasks).map((task) => (
           <TaskModal key={task.id} task={task} />
         ))}
