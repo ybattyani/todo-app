@@ -2,7 +2,7 @@ import { defineConfig } from "cypress";
 
 export default defineConfig({
   e2e: {
-    baseUrl: "http://localhost:5173/", // vite preview default
+    baseUrl: "http://localhost:4173/", // vite preview default
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },

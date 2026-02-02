@@ -38,7 +38,7 @@ export default function TaskList(category="ALL", displayType="FULL") {
         onSave={handleSaveTask}
       />}
       <ul>
-        {showGrocery()}
+        {showGrocery(items,displayType)}
         {visibleTasks.map(task => (
           <TaskModal key={task.id} task={task} displayType={displayType} />
         ))}
