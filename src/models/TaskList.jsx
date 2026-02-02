@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import TaskCreateModal from "../models/TaskCreationModal";
 import TaskModal from "../models/Task";
 import { TASK_CATEGORIES,buildTaskTree,sortTasks,filterTasks } from "../utils/Taskutils";
-import {showGrocery} from "../models/grocery/groceryItem"
+import {showGroceryTask} from "../models/grocery/groceryItem"
 import { subscribeToTasks,addTaskToDB,subscribeToItems } from "../utils/db";
 import '../App.css'
 
@@ -38,7 +38,7 @@ export default function TaskList(category="ALL", displayType="FULL") {
         onSave={handleSaveTask}
       />}
       <ul>
-        {showGrocery(items,displayType)}
+        {category==="ALL" && showGroceryTask(items,displayType)}
         {visibleTasks.map(task => (
           <TaskModal key={task.id} task={task} displayType={displayType} />
         ))}

@@ -55,7 +55,7 @@ export default function GroceryItem({item,onToggleCompleted}) {
 );
 }
 
-export function showGrocery(items,displayType='FULL') {
+export function showGroceryTask(items,displayType='FULL') {
     if(items.length===0){
       return false
     }
