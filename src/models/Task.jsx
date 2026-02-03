@@ -64,6 +64,7 @@ export default function TaskModal({ task, level = 0, displayType = "FULL" }) {
             key={child.id}
             task={child}
             level={level + 1}
+            displayType={displayType}
           />
       ))}
     </>

@@ -1,0 +1,11 @@
+.item-row {
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  padding: 2px 0; 
+  font-size: 18px;
+}
+.item-content.completed {
+  text-decoration: line-through;
+  opacity: 0.6;
+}

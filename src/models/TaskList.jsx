@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import TaskCreateModal from "../models/TaskCreationModal";
 import TaskModal from "../models/Task";
 import { TASK_CATEGORIES,buildTaskTree,sortTasks,filterTasks } from "../utils/Taskutils";
-import { subscribeToTasks,addTaskToDB } from "../utils/db";
+import {showGroceryTask} from "../models/grocery/groceryItem"
+import { subscribeToTasks,addTaskToDB,subscribeToItems } from "../utils/db";
 import '../App.css'
 
 export default function TaskList(category="ALL", displayType="FULL") {
   const [tasks, setTasks] = useState([]);
+  const [items, setItems] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filter, setFilter] = useState('ACTIVE');
   const [categoryFilter, setCategoryFilter] = useState(category);
@@ -15,6 +17,7 @@ export default function TaskList(category="ALL", displayType="FULL") {
 
   useEffect(() => {
     const unsubscribe = subscribeToTasks(setTasks);
+    const unsubscribeitems = subscribeToItems(setItems);  
     return () => unsubscribe();
   }, []);
   async function handleSaveTask(task) {
@@ -35,6 +38,7 @@ export default function TaskList(category="ALL", displayType="FULL") {
         onSave={handleSaveTask}
       />}
       <ul>
+        {category==="ALL" && showGroceryTask(items,displayType)}
         {visibleTasks.map(task => (
           <TaskModal key={task.id} task={task} displayType={displayType} />
         ))}
