@@ -1,6 +1,7 @@
 import React, { useState,useEffect,useRef } from "react";
 import { createTask,TASK_CATEGORIES,PRIORITY_LEVELS } from "../utils/Taskutils";
 import { subscribeToTasks } from "../utils/db";
+import {AddTaskButton,CancelButton} from "../elements/TDButtons";
 import { getDate } from "../utils/date";
 import './TaskCreationModal.css';
 
@@ -162,17 +163,11 @@ export default function TaskCreateModal({ task, isEditMode, onClose, onSave }) {
           />
         </div>
         <div className="modal-buttons">
-          <button onClick={handleSubmitAndClose} className="task-add-btn" data-cy="task-create-button">
-            {isEditMode ? "Save" : "Add"}
-          </button>
+          <AddTaskButton onClick={handleSubmitAndClose} title={isEditMode ? "Save" : "Add"}/>
           {!isEditMode && (
-            <button onClick={handleSubmitAndReOpen} className="task-add-btn">
-              Add & New
-            </button>
+            <AddTaskButton onClick={handleSubmitAndReOpen} title="Add & New"/>
           )}
-          <button onClick={closeModal} className="task-cancel-btn">
-            Cancel
-          </button>
+          <CancelButton onClick={closeModal}/>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { AddTaskButton } from "../models/TaskList";
+import {AddTaskButton} from "../elements/TDButtons"
 import TaskCreateModal from "../models/TaskCreationModal";
 import TaskModal from "../models/Task";
 import { todayAndOverdueTasks,sortTasks, onlyTomorrowTasks } from "../utils/Taskutils";
@@ -38,7 +38,7 @@ export default function todayPage() {
         >
           {isToday ? "Show Tomorrow" : "Show Today"}
         </button>
-        {AddTaskButton(()=>setIsModalOpen(true))}
+        <AddTaskButton onClick={(()=>setIsModalOpen(true))}/>
 
       </div>
       {isModalOpen && <TaskCreateModal
