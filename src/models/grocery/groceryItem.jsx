@@ -1,5 +1,3 @@
-import { useState, useEffect } from "react";
-import { updateItemInDB } from "../../utils/db";
 import {createTask} from "../../utils/Taskutils";
 import TaskModal from "../Task";
 import { useSortable } from "@dnd-kit/sortable";
@@ -7,7 +5,6 @@ import { CSS } from "@dnd-kit/utilities";
 import './groceryitem.css'
 
 export default function GroceryItem({item,onToggleCompleted}) {
-  // const [completed, setCompleted] = useState(item.completed);
   const {
     attributes,
     listeners,
@@ -21,15 +18,6 @@ export default function GroceryItem({item,onToggleCompleted}) {
     transition,
   };
 
-  // useEffect(() => {
-  //   setCompleted(item.completed);
-  // }, [item]);
-  // const toggleCompleted = () => {
-  //   setCompleted(!completed);
-  //   item.completed = !item.completed
-  //   updateItemInDB(item)
-  //   console.log(item)
-  // };
   return (
     <li 
       key={item.id}

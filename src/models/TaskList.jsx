@@ -3,6 +3,7 @@ import TaskCreateModal from "../models/TaskCreationModal";
 import TaskModal from "../models/Task";
 import { TASK_CATEGORIES,buildTaskTree,sortTasks,filterTasks } from "../utils/Taskutils";
 import {showGroceryTask} from "../models/grocery/groceryItem"
+import {AddTaskButton} from "../elements/TDButtons";
 import { subscribeToTasks,addTaskToDB,subscribeToItems } from "../utils/db";
 import '../App.css'
 
@@ -28,7 +29,7 @@ export default function TaskList(category="ALL", displayType="FULL") {
   
   return (
     <div>
-      {AddTaskButton(()=>setIsModalOpen(true))}
+      <AddTaskButton onClick={()=>setIsModalOpen(true)} title="Add Task"/>
       {FiltersTaskDropDown(filter,setFilter,categoryFilter,setCategoryFilter,displayType)}
 
       {isModalOpen && <TaskCreateModal
@@ -45,16 +46,6 @@ export default function TaskList(category="ALL", displayType="FULL") {
       </ul>
     </div>
   );
-}
-
-export function AddTaskButton(onClick) {
-  return (      
-    <div> 
-      <button onClick={() => onClick()} className="task-add-btn" data-cy="add-task-button">
-        Add Task
-      </button>
-    </div>
-  )
 }
 
 export function FiltersTaskDropDown(filter,setFilter,categoryFilter,setCategoryFilter,displayType){

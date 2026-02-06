@@ -34,27 +34,3 @@
 .task-menu-dropdown .danger {
   color: #ff6b6b;
 }
-
-.icon-btn {
-  background: transparent;
-  border: none;
-  padding: 4px;
-  cursor: pointer;
-}
-.icon-desktop {
-  display: inline;
-}
-
-.icon-mobile {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  .icon-desktop {
-    display: none;
-  }
-
-  .icon-mobile {
-    display: inline;
-  }
-}

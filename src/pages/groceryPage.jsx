@@ -36,26 +36,25 @@ export default function GroceryPage(){
   };
   async function uncheckAll() {
     setItems((prev) =>
-    prev.map((item) => ({
-      ...item,
-      completed: false,
-    }))
-  );
+      prev.map((item) => ({
+        ...item,
+        completed: false,
+      }))
+    );
 
-  await resetAllItemsInDB();
+    await resetAllItemsInDB();
   }
   async function deleteAll() {
     const confirmDelete = window.confirm(
-    "Are you sure you want to delete all items?"
-  );
-  if (!confirmDelete) return;
+      "Are you sure you want to delete all items?"
+    );
+    if (!confirmDelete) return;
 
-  // Instant UI update
-  setItems([]);
+    // Instant UI update
+    setItems([]);
 
-  await deleteAllItemsFromDB();
+    await deleteAllItemsFromDB();
   }
-
   function handleDragEnd(event) {
     const { active, over } = event;
 

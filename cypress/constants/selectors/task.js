@@ -10,6 +10,6 @@ export const tasksSelectors = {
 };
 export const tasksCreationSelector = {
   title: '.modal-input',
-  category: '[data-cy=category-select]',
-  create_button: '[data-cy="task-create-button"]',
+  category: '[data-cy=select-Category]',
+  create_button: '[data-cy="task-create-button-Add"]',
 }

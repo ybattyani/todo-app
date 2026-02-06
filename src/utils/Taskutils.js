@@ -1,9 +1,18 @@
 import { getDate, getTomorrowDate } from "../utils/date";
 
 export const PRIORITY_LEVELS = {
-  low: "low",
-  normal: "normal",
-  high: "high",
+  LOW: {
+    label: "Low",
+    color: "#00ff0d",
+  },
+  NORMAL: {
+    label: "Normal",
+    color: "#2200ff",
+  },
+  HIGH: {
+    label: "High",
+    color: "#ff0000",
+  }
 };
 export const TASK_CATEGORIES = {
   PERSONAL: {
