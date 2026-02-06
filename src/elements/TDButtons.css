@@ -27,3 +27,36 @@
 .task-cancel-btn:hover {
   background-color: #999;
 }
+
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.icon-btn:hover {
+  background-color: rgba(15, 9, 9, 0.12);
+}
+
+.icon-btn.delete:hover {
+  background-color: rgba(255, 0, 0, 0.15);
+}
+.icon-desktop {
+  display: inline;
+}
+
+.icon-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .icon-desktop {
+    display: none;
+  }
+
+  .icon-mobile {
+    display: inline;
+  }
+}

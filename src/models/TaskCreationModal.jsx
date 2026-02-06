@@ -2,6 +2,7 @@ import React, { useState,useEffect,useRef } from "react";
 import { createTask,TASK_CATEGORIES,PRIORITY_LEVELS } from "../utils/Taskutils";
 import { subscribeToTasks } from "../utils/db";
 import {AddTaskButton,CancelButton} from "../elements/TDButtons";
+import {TDSelectObjectButton,DateSelector,TaskSelectorButton} from "../elements/TDElements";
 import { getDate } from "../utils/date";
 import './TaskCreationModal.css';
 
@@ -12,7 +13,7 @@ export default function TaskCreateModal({ task, isEditMode, onClose, onSave }) {
   const [category, setCategory] = useState("PERSONAL");
   const [dueDate, setDueDate] = useState(getDate());
   const [parentId, setParentId] = useState(null);
-  const [priority, setPriority] = useState(PRIORITY_LEVELS.normal);
+  const [priority, setPriority] = useState("NORMAL");
   const inputRef = useRef(null);
   
   useEffect(() => {
@@ -105,53 +106,24 @@ export default function TaskCreateModal({ task, isEditMode, onClose, onSave }) {
           className="modal-input"
         />
         <div className="task-options">
-          Category:
-          <select
-            value={category}
+          <TDSelectObjectButton
             onChange={(e) => setCategory(e.target.value)}
-            data-cy='category-select'
-          >
-            {Object.entries(TASK_CATEGORIES).map(([key, value]) => (
-              <option key={key} value={key}>
-                {value.label}
-              </option>
-            ))}
-          </select>
-          Due date:
-          <label className="form-label">
-            <input
-              type="date"
-              value={dueDate}
-              onChange={(e) => setDueDate(e.target.value)}
-              className="task-date-input"
-            />
-          </label>
-          Parent:
-          <select
-            value={parentId}
-            onChange={(e) => setParentId(e.target.value || null)}
-            >
-            <option value="">No parent</option>
+            title="Category"
+            isSelected={category}
+            options={TASK_CATEGORIES}
+          />
+          <DateSelector onChange={(e) => setDueDate(e.target.value)} title="Due date" isSelected={dueDate}/>
+          <TaskSelectorButton onChange={(e) => setParentId(e.target.value || null)} title="Parent" isSelected={parentId} tasks=
             {tasks
               .filter(t => !t.parentId)
               .filter(t => !t.completed) // only allow non-completed tasks as parents
-              .map(task => (
-                <option key={task.id} value={task.id}>
-                  {task.text}
-                </option>
-              ))}
-          </select>
-          Priority:
-          <select
-            value={priority}
+              }/>
+           <TDSelectObjectButton
             onChange={(e) => setPriority(e.target.value)}
-          >
-            {Object.entries(PRIORITY_LEVELS).map(([key, value]) => (
-              <option key={key} value={value}>
-                {key.charAt(0).toUpperCase() + key.slice(1)}
-              </option>
-            ))}
-          </select>
+            title="Priority"
+            isSelected={priority}
+            options={PRIORITY_LEVELS}
+          />
         </div>
         <div>
           Description (Optional):

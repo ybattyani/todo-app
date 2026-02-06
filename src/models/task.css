@@ -100,22 +100,3 @@
   font-weight: bold;
   font-size: 18px;
 }
-
-.icon-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  background: transparent;
-}
-
-.icon-btn:hover {
-  background-color: rgba(255, 255, 255, 0.12);
-}
-
-.icon-btn.delete:hover {
-  background-color: rgba(255, 0, 0, 0.15);
-}

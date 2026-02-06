@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import {MenuButton} from "../elements/TDButtons";
 import { EllipsisVertical,Menu , Pencil, Trash2, LayersPlus } from "lucide-react";
 import './taskMenu.css';
 
@@ -19,14 +20,7 @@ export default function TaskMenu({ onEdit, onCreate, onDelete }) {
 
   return (
     <div className="task-menu" ref={menuRef}>
-      <button
-        className="icon-btn"
-        onClick={() => setOpen((v) => !v)}
-        aria-label="Task actions"
-      >
-        <EllipsisVertical className="icon-mobile" size={18} />
-        <Menu className="icon-desktop" size={20} />
-      </button>
+      <MenuButton onClick={() => setOpen((v) => !v)}/>
 
       {open && (
         <div className="task-menu-dropdown">
