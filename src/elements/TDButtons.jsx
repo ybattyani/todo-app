@@ -3,7 +3,7 @@ import './TDButtons.css';
 
 export function AddTaskButton({ onClick, title="Add" }) {
   return (
-    <button onClick={onClick} className="task-add-btn" data-cy="task-create-button">
+    <button onClick={onClick} className="task-add-btn" data-cy={"task-create-button-"+title}>
       {title}
     </button>
   )
@@ -20,7 +20,7 @@ export function BasicButton({ onClick, title="Button" }) {
     <button
       className="task-add-btn"
       onClick={onClick}
-      data-cy={`TD-Basic-Button-${title}`}
+      data-cy="TD-Basic-Button"
     >
       {title}
     </button>

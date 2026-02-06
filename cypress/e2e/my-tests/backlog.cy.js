@@ -15,7 +15,7 @@ describe("Backlog Testing", () => {
     cy.get(tasksSelectors.add_task_button).click()
     cy.get(tasksCreationSelector.category).should('have.value','MYAPP')
     cy.get(tasksCreationSelector.title).type(taskTitle)
-    cy.get(tasksCreationSelector.create_button).click()
+    cy.get(tasksCreationSelector.create_button).contains('Add').click()
 
     //verify creation
     cy.get(tasksSelectors.row).contains(taskTitle).should('exist')
