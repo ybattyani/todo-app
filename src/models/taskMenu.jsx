@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import {MenuButton} from "../elements/TDButtons";
-import { EllipsisVertical,Menu , Pencil, Trash2, LayersPlus } from "lucide-react";
+import { Pencil, Trash2, LayersPlus } from "lucide-react";
 import './taskMenu.css';
 
 export default function TaskMenu({ onEdit, onCreate, onDelete }) {

@@ -1,5 +1,4 @@
-import { NavLink } from "react-router-dom";
-import { EllipsisVertical,Menu , Pencil, Trash2, LayersPlus } from "lucide-react";
+import { EllipsisVertical,Menu } from "lucide-react";
 import './TDButtons.css';
 
 export function AddTaskButton({ onClick, title="Add" }) {
@@ -9,13 +8,14 @@ export function AddTaskButton({ onClick, title="Add" }) {
     </button>
   )
 }
-export function CancelButton({onClick, title="Cancel"}){
+export function CancelButton({onClick, title="Cancel"}) {
   return (
     <button onClick={onClick} className="task-cancel-btn" data-cy="task-cancel-button">
       {title}
     </button>
   )
-}export function BasicButton({ onClick, title="Button" }) {
+}
+export function BasicButton({ onClick, title="Button" }) {
   return (
     <button
       className="task-add-btn"
